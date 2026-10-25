@@ -77,13 +77,13 @@ export function InputPanel({
     }
     if (selectedModes.length === 1) {
       const single = selectedModes[0];
-      return `Generate ${single === "deep" ? "Deep" : single === "counter" ? "Counter" : "Quick"}`;
+      return `Run ${single === "deep" ? "Deep Check" : single === "counter" ? "Other Side" : "Quick Summary"}`;
     }
     if (selectedModes.length === 2) {
-      return `Generate 2 Modes (One by one)`;
+      return `Run 2 Checks (One by one)`;
     }
     if (selectedModes.length === 3) {
-      return `Generate All 3 (One by one)`;
+      return `Run All 3 Checks (One by one)`;
     }
     return "Select at least 1 mode";
   }
@@ -186,8 +186,8 @@ export function InputPanel({
                 {selectedModes.includes("quick") ? <Icon name="icon-check" size={11} /> : null}
               </span>
             </div>
-            <strong className="sx-mode-card-title">Quick Overview</strong>
-            <span className="sx-mode-card-desc">The essential read: main claims & key caveats</span>
+            <strong className="sx-mode-card-title">Quick Summary</strong>
+            <span className="sx-mode-card-desc">The main points and what you need to know</span>
           </button>
 
           <button
@@ -203,8 +203,8 @@ export function InputPanel({
                 {selectedModes.includes("deep") ? <Icon name="icon-check" size={11} /> : null}
               </span>
             </div>
-            <strong className="sx-mode-card-title">Deep Analysis</strong>
-            <span className="sx-mode-card-desc">Comprehensive reasoning, evidence audit & tactics</span>
+            <strong className="sx-mode-card-title">Deep Check</strong>
+            <span className="sx-mode-card-desc">A close look at whether claims hold up and what proof is given</span>
           </button>
 
           <button
@@ -220,25 +220,25 @@ export function InputPanel({
                 {selectedModes.includes("counter") ? <Icon name="icon-check" size={11} /> : null}
               </span>
             </div>
-            <strong className="sx-mode-card-title">Counter Perspective</strong>
-            <span className="sx-mode-card-desc">Steelmanned challenges & what would settle the debate</span>
+            <strong className="sx-mode-card-title">Other Side</strong>
+            <span className="sx-mode-card-desc">The strongest counter-arguments and different viewpoints</span>
           </button>
         </div>
       </fieldset>
 
       <details className="sx-focus-details">
-        <summary>Fine-tune this reading <span>Optional focus · response language</span></summary>
-        <label htmlFor="analysis-focus">Focus this analysis</label>
+        <summary>Customize this check <span>Optional focus · output language</span></summary>
+        <label htmlFor="analysis-focus">Focus on something specific</label>
         <input
           id="analysis-focus"
           className="sx-focus-input"
           value={focus}
           onChange={(event) => setFocus(event.target.value.slice(0, 300))}
-          placeholder="e.g. Check only for logical fallacies"
+          placeholder="e.g. Check if this is exaggerated or biased"
           maxLength={300}
           disabled={loading}
         />
-        <label>Write the analysis in… <span>Select from Gemma supported languages or leave blank to match post</span></label>
+        <label>Write the results in… <span>Choose a language or leave blank to match the post</span></label>
         <LanguagePicker
           value={outputLanguage}
           onChange={setOutputLanguage}
@@ -247,7 +247,7 @@ export function InputPanel({
       </details>
 
       <div className="sx-submit-row">
-        <span className="sx-submit-note">Your post stays on this device.</span>
+        <span className="sx-submit-note">Your post stays on your device. Everything runs locally.</span>
         <div className="sx-panel-actions">
           {hasResult && !loading && (
             <button type="button" className="sx-ghost-btn" onClick={onReset} disabled={loading}>

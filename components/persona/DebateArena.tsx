@@ -16,6 +16,7 @@ export function DebateArena() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluation, setEvaluation] = useState<DebateEvaluation | null>(null);
+  const [viewMode, setViewMode] = useState<"chat" | "evaluation">("chat");
   const [error, setError] = useState<string | null>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -175,6 +176,7 @@ export function DebateArena() {
 
       const data = (await res.json()) as DebateEvaluation;
       setEvaluation(data);
+      setViewMode("evaluation");
     } catch (err: unknown) {
       if ((err as Error)?.name === "AbortError") return;
       setError((err as Error)?.message || "Failed to analyze debate.");
@@ -187,6 +189,7 @@ export function DebateArena() {
   function handleReset() {
     setIsDebating(false);
     setEvaluation(null);
+    setViewMode("chat");
     setMessages([]);
     setInputMessage("");
     setError(null);
@@ -254,7 +257,7 @@ export function DebateArena() {
         </section>
       )}
 
-      {isDebating && !evaluation && (
+      {isDebating && (!evaluation || viewMode === "chat") && (
         <section className="sx-debate-live">
           <header className="sx-debate-live-head">
             <div className="sx-debate-live-meta">
@@ -267,6 +270,17 @@ export function DebateArena() {
               <h2 className="sx-debate-live-topic">&ldquo;{topic}&rdquo;</h2>
             </div>
             <div className="sx-debate-live-actions">
+              {evaluation && (
+                <button
+                  type="button"
+                  className="sx-btn sx-btn-secondary"
+                  onClick={() => setViewMode("evaluation")}
+                  title="View the latest referee scorecard"
+                >
+                  <Icon name="icon-search-plus" size={14} />
+                  <span>View Scorecard</span>
+                </button>
+              )}
               {messages.length >= 2 && (
                 <button
                   type="button"
@@ -275,7 +289,7 @@ export function DebateArena() {
                   disabled={isEvaluating || isLoading}
                 >
                   <Icon name="icon-search-plus" size={14} />
-                  <span>{isEvaluating ? "Evaluating debate..." : "Analyse Debate"}</span>
+                  <span>{isEvaluating ? "Evaluating debate..." : evaluation ? "Re-analyse Debate" : "Analyse Debate"}</span>
                 </button>
               )}
               <button type="button" className="sx-ghost-btn" onClick={handleReset} disabled={isLoading || isEvaluating}>
@@ -342,9 +356,14 @@ export function DebateArena() {
         </section>
       )}
 
-      {evaluation && (
+      {evaluation && viewMode === "evaluation" && (
         <section className="sx-debate-evaluation-view">
-          <DebateEvaluationCard evaluation={evaluation} personaId={personaId} onReset={handleReset} />
+          <DebateEvaluationCard
+            evaluation={evaluation}
+            personaId={personaId}
+            onReset={handleReset}
+            onBackToChat={() => setViewMode("chat")}
+          />
         </section>
       )}
 

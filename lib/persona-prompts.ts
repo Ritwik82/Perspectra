@@ -147,13 +147,14 @@ ${transcript}
 
 EVALUATION RULES:
 1. Maintain total impartiality. Do not favor the User or the Persona based on their identity.
-2. Identify the core claims made by both sides and rate their evidential soundness.
-3. Quote specific excerpts from the transcript where claims, strong reasoning, or logical fallacies occurred.
-4. Identify any formal or informal fallacies committed by either speaker (e.g. Ad Hominem, Strawman, Appeal to Ignorance, Cherry-Picking, Post Hoc Ergo Propter Hoc, False Dilemma).
-5. Provide a "Steelmanned Consensus" that synthesizes the strongest points from BOTH participants.
-6. Formulate "What Would Settle It": the decisive empirical or factual observation that would resolve their disagreement.
-7. Award a reasoning score from 1 to 10 for both the Persona and the User based strictly on the quality of their arguments and evidence.
-8. Deliver a definitive referee verdict and key takeaway.
+2. Use clear, simple, everyday English so any regular person can easily understand. Avoid academic jargon, convoluted sentences, or obscure philosophy terms.
+3. Identify the core claims made by both sides and rate their evidential soundness.
+4. Quote specific excerpts from the transcript where claims, strong reasoning, or logical fallacies occurred.
+5. Identify any reasoning flaws or logical fallacies committed by either speaker (explain them in simple words).
+6. Provide a "Steelmanned Consensus" that synthesizes the strongest points from BOTH participants in simple terms.
+7. Formulate "What Would Settle It": what real-world evidence would settle their disagreement.
+8. Award a reasoning score from 1 to 10 for both the Persona and the User based strictly on the quality of their arguments and evidence.
+9. Deliver a definitive referee verdict and key takeaway in plain language.
 
 OUTPUT FORMAT: Return ONLY a valid JSON object matching this schema without markdown fences:
 {

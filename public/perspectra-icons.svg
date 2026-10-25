@@ -191,6 +191,10 @@
     <path d="M3 8h10M9 4l4 4-4 4"/>
   </symbol>
 
+  <symbol id="icon-arrow-left" viewBox="0 0 16 16">
+    <path d="M13 8H3M7 4L3 8l4 4"/>
+  </symbol>
+
   <!--
     icon-dash
     No Signal marker in card 02 of the No Signal screen.

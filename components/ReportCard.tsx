@@ -63,6 +63,31 @@ export function ReportCard({
             {!scoreApplicable && <span className="sx-score-na">Not applicable</span>}
           </div>
 
+          <details className="sx-scoring-explainer">
+            <summary className="sx-scoring-explainer-trigger">
+              <Icon name="icon-info" size={13} />
+              <span>How is this scored?</span>
+            </summary>
+            <div className="sx-scoring-explainer-body">
+              <div className="sx-score-tier">
+                <span className="sx-score-pill is-high">8 – 10</span>
+                <span><strong>Strong Evidence:</strong> Clear facts, credible sources, and sound logic with no misleading claims.</span>
+              </div>
+              <div className="sx-score-tier">
+                <span className="sx-score-pill is-mid">5 – 7</span>
+                <span><strong>Moderate Support:</strong> Makes sensible points, but relies partly on assumptions or lacks independent proof.</span>
+              </div>
+              <div className="sx-score-tier">
+                <span className="sx-score-pill is-low">1 – 4</span>
+                <span><strong>Weak / Flawed:</strong> Uses anecdotes as proof, confuses correlation with cause, or uses logical fallacies.</span>
+              </div>
+              <div className="sx-score-tier">
+                <span className="sx-score-pill is-na">N/A</span>
+                <span><strong>Not Applicable:</strong> Personal opinions, questions, or creative text with no factual claim to score.</span>
+              </div>
+            </div>
+          </details>
+
           <span className="sx-meta">
             {result.meta.model} · {seconds}s · {result.meta.tokPerS} tok/s · {result.mode}
             {result.meta.attempts > 1 ? ` · ${result.meta.attempts} passes` : ""}
@@ -130,7 +155,7 @@ export function ReportCard({
 
         {result.counterArguments.length > 0 && (
           <section className="sx-block sx-counter-list">
-            <h3 className="sx-label">Reasonable challenges</h3>
+            <h3 className="sx-label">Arguments from the other side</h3>
             <ol>
               {result.counterArguments.map((item, index) => (
                 <li key={index}>{item}</li>
@@ -147,7 +172,7 @@ export function ReportCard({
 
         {!result.noSignal && result.tactics.length > 0 && (
           <section className="sx-block">
-            <h3 className="sx-label">Rhetorical moves</h3>
+            <h3 className="sx-label">Persuasion tricks & tactics</h3>
             <ul className="sx-tactics">
               {result.tactics.map((tactic, i) => (
                 <li key={i} className="sx-tactic">
@@ -157,10 +182,10 @@ export function ReportCard({
                     <p className="sx-evidence-match">
                       {sourceText.includes(tactic.quote) ? (
                         <button type="button" className="sx-evidence-jump" onClick={() => onEvidenceSelect?.(tactic.quote)}>
-                          Show in post
+                          Find in post
                         </button>
                       ) : (
-                        "Exact span could not be matched to pasted text."
+                        "Exact quote could not be matched to pasted text."
                       )}
                     </p>
                   )}
@@ -188,7 +213,7 @@ export function ReportCard({
         <div className="sx-report-tools">
           <button type="button" className="sx-ghost-btn" onClick={() => download(toMarkdown(result))}>
             <Icon name="icon-download" />
-            <span>Save report</span>
+            <span>Download report</span>
           </button>
         </div>
       </footer>

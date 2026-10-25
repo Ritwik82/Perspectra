@@ -287,9 +287,9 @@ body, textarea { caret-color: var(--sx-primary); }
 
 .sx-shell {
   width: 100%;
-  max-width: 1600px;
+  max-width: 1380px;
   margin: 0 auto;
-  padding: var(--sx-space-5) clamp(16px, 4vw, 56px) var(--sx-space-8);
+  padding: var(--sx-space-5) clamp(16px, 3.5vw, 48px) var(--sx-space-8);
   box-sizing: border-box;
 }
 
@@ -442,11 +442,15 @@ body, textarea { caret-color: var(--sx-primary); }
 /* ── Input panel ────────────────────────────────────────── */
 
 .sx-panel {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
+  border: 1px solid var(--sx-border-strong);
+  border-radius: var(--sx-radius-card);
+  background: var(--sx-surface);
+  padding: 24px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  margin-top: 20px;
+}
+[data-theme="dark"] .sx-panel {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
 }
 
 .sx-input-heading { display: flex; align-items: center; gap: 10px; margin-bottom: var(--sx-space-3); font-size: var(--sx-text-lg); font-weight: 600; }
@@ -454,18 +458,17 @@ body, textarea { caret-color: var(--sx-primary); }
 
 .sx-drop {
   position: relative;
-  border: 1px solid var(--sx-border);
-  border: 0;
-  border-radius: 0;
-  border-bottom: 1px solid var(--sx-border-strong);
-  background: transparent;
-  padding: var(--sx-space-3) 0;
-  transition: border-color var(--sx-dur) var(--sx-ease),
-              box-shadow var(--sx-dur) var(--sx-ease);
+  border: 1.5px solid var(--sx-border-strong);
+  border-radius: var(--sx-radius-card);
+  background: var(--sx-surface-2);
+  padding: 14px 16px;
+  transition: all var(--sx-dur) var(--sx-ease);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
 }
 .sx-drop:focus-within {
   border-color: var(--sx-primary);
-  box-shadow: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 2px 10px rgba(0, 0, 0, 0.05);
+  background: var(--sx-surface);
 }
 .sx-drop.is-dragging { border-color: var(--sx-accent); border-style: dashed; }
 
@@ -2420,4 +2423,98 @@ body, textarea { caret-color: var(--sx-primary); }
 .sx-score-track i {
   background: linear-gradient(90deg, #f59e0b 0%, #10b981 100%) !important;
   border-radius: var(--sx-radius-pill);
+}
+
+
+/* === Pulsar OS Inspired Elements, Scoring Guide, and Debate Back Navigation === */
+.sx-scoring-explainer {
+  margin-top: 10px;
+  font-size: var(--sx-text-micro);
+  color: var(--sx-fg-2);
+}
+.sx-scoring-explainer-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: var(--sx-radius-pill);
+  background: var(--sx-surface-3);
+  color: var(--sx-fg);
+  font-weight: 500;
+  transition: background var(--sx-dur-fast) var(--sx-ease);
+  user-select: none;
+}
+.sx-scoring-explainer-trigger:hover {
+  background: var(--sx-border-strong);
+}
+.sx-scoring-explainer-body {
+  margin-top: 10px;
+  padding: 14px 18px;
+  background: var(--sx-surface-2);
+  border: 1px solid var(--sx-border-strong);
+  border-radius: var(--sx-radius-card);
+  display: grid;
+  gap: 10px;
+  font-size: var(--sx-text-sm);
+  color: var(--sx-fg);
+  line-height: 1.5;
+}
+.sx-score-tier {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.sx-score-pill {
+  flex: none;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--sx-font-mono);
+}
+.sx-score-pill.is-high {
+  background: rgba(16, 185, 129, 0.16);
+  color: #10b981;
+}
+.sx-score-pill.is-mid {
+  background: rgba(245, 158, 11, 0.16);
+  color: #d97706;
+}
+[data-theme="dark"] .sx-score-pill.is-mid {
+  color: #fbbf24;
+}
+.sx-score-pill.is-low {
+  background: rgba(239, 68, 68, 0.16);
+  color: #ef4444;
+}
+.sx-score-pill.is-na {
+  background: var(--sx-surface-3);
+  color: var(--sx-muted);
+}
+
+.sx-debate-eval-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--sx-surface-2);
+  border-bottom: 1px solid var(--sx-border);
+}
+.sx-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+.sx-btn-secondary {
+  background: var(--sx-surface-3);
+  color: var(--sx-fg);
+  border: 1px solid var(--sx-border-strong);
+}
+.sx-btn-secondary:hover {
+  background: var(--sx-border-strong);
+  color: var(--sx-fg);
 }

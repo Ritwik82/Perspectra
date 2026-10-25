@@ -25,7 +25,7 @@ export function OtherSidePanel({ counterView, mode }: { counterView: CounterView
           <div className="sx-settle">
             <div className="sx-settle-head">
               <Icon name="icon-info" size={13} />
-              <span>What would settle it</span>
+              <span>What proof would settle this debate</span>
             </div>
             <p>{settlingEvidence}</p>
           </div>

@@ -9,15 +9,37 @@ export function DebateEvaluationCard({
   evaluation,
   personaId,
   onReset,
+  onBackToChat,
 }: {
   evaluation: DebateEvaluation;
   personaId: PersonaId;
   onReset: () => void;
+  onBackToChat: () => void;
 }) {
   const persona = PERSONAS[personaId];
 
   return (
     <article className="sx-report sx-debate-eval-card" aria-live="polite">
+      <div className="sx-debate-eval-top-bar">
+        <button
+          type="button"
+          className="sx-btn sx-btn-secondary sx-back-btn"
+          onClick={onBackToChat}
+          title="Return to the conversation transcript"
+        >
+          <Icon name="icon-arrow-left" size={14} />
+          <span>Back to Debate Chat</span>
+        </button>
+        <button
+          type="button"
+          className="sx-ghost-btn"
+          onClick={onReset}
+        >
+          <Icon name="icon-plus" size={13} />
+          <span>New Debate</span>
+        </button>
+      </div>
+
       <header className="sx-report-head">
         <div className="sx-debate-eval-verdict">
           <span className="sx-debate-eval-badge">Referee Evaluation</span>
@@ -59,6 +81,21 @@ export function DebateEvaluationCard({
             </div>
           </div>
         </div>
+
+        <details className="sx-scoring-explainer" style={{ marginTop: "16px", width: "100%" }}>
+          <summary className="sx-scoring-explainer-trigger">
+            <Icon name="icon-info" size={13} />
+            <span>How referee scoring works</span>
+          </summary>
+          <div className="sx-scoring-explainer-body">
+            <p style={{ margin: "0 0 8px" }}>The referee gives a score from 1 to 10 based on how well each side argued:</p>
+            <ul style={{ margin: 0, paddingLeft: "18px", display: "grid", gap: "6px" }}>
+              <li><strong>Backing Claims with Proof:</strong> Giving reasons, facts, or examples instead of just repeating assertions.</li>
+              <li><strong>Avoiding Fallacies:</strong> Not resorting to personal attacks, twisting the opponent&apos;s words (strawman), or jumping to unproven conclusions.</li>
+              <li><strong>Facing Hard Questions:</strong> Directly addressing counterarguments rather than dodging or changing the topic.</li>
+            </ul>
+          </div>
+        </details>
       </header>
 
       <div className="sx-report-body-container">
@@ -151,13 +188,19 @@ export function DebateEvaluationCard({
         </section>
       </div>
 
-      <footer className="sx-report-foot">
-        <p className="sx-confidence">
+      <footer className="sx-report-foot" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+        <p className="sx-confidence" style={{ margin: 0 }}>
           <span>Verdict: {evaluation.refereeVerdict}</span>
         </p>
-        <button type="button" className="sx-btn" onClick={onReset}>
-          <span>Start New Debate</span>
-        </button>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <button type="button" className="sx-ghost-btn" onClick={onBackToChat}>
+            <Icon name="icon-arrow-left" size={14} />
+            <span>Back to Debate Chat</span>
+          </button>
+          <button type="button" className="sx-btn" onClick={onReset}>
+            <span>Start New Debate</span>
+          </button>
+        </div>
       </footer>
     </article>
   );

@@ -253,14 +253,15 @@ export default function Page() {
         </button>
       </nav>
 
-      {activeView === "debate" ? (
+      <div style={{ display: activeView === "debate" ? "block" : "none" }}>
         <DebateArena />
-      ) : (
-        <>
-          <section className="sx-intro" id="top">
-        <h1 className="sx-h1">Before you believe it,<br /><span className="sx-h1-gradient">take a closer look.</span></h1>
-        <p className="sx-lede">Read the claim. Inspect what supports it. Keep the context that changes what it means.</p>
-      </section>
+      </div>
+
+      <div style={{ display: activeView === "analyzer" ? "block" : "none" }}>
+        <section className="sx-intro" id="top">
+          <h1 className="sx-h1">Before you believe or share it,<br /><span className="sx-h1-gradient">see the full story.</span></h1>
+          <p className="sx-lede">Check the main claims, see what proof is provided, and find out what the other side says.</p>
+        </section>
 
       <InputPanel
         text={text}
@@ -368,7 +369,7 @@ export default function Page() {
                         if (lastCompletedMode === item) setLastCompletedMode(null);
                       }}
                     >
-                      <span className="sx-tab-title">{item === "quick" ? "Quick Overview" : item === "deep" ? "Deep Analysis" : "Counter Perspective"}</span>
+                      <span className="sx-tab-title">{item === "quick" ? "Quick Summary" : item === "deep" ? "Deep Check" : "Other Side"}</span>
                       <span className={`sx-tab-state is-${hasResult ? "complete" : isTabRunning ? "running" : state}`}>
                         {hasResult ? "Ready" : isTabRunning ? "Running" : state === "queued" ? "Queued" : state === "error" ? "Failed" : "Not run"}
                       </span>
@@ -433,8 +434,8 @@ export default function Page() {
                       <span className="sx-loading-spinner" />
                     </div>
                     <div className="sx-loading-hero-info">
-                      <h4>Generating {mode === "deep" ? "Deep Analysis" : mode === "counter" ? "Counter Perspective" : "Quick Overview"}…</h4>
-                      <p>Local Gemma 4 is evaluating claims, logical consistency, and evidentiary basis ({elapsed}s elapsed).</p>
+                      <h4>Checking {mode === "deep" ? "Deep Check" : mode === "counter" ? "Other Side" : "Quick Summary"}…</h4>
+                      <p>Local Gemma model is evaluating the claims, proof, and reasoning ({elapsed}s elapsed).</p>
                       <div className="sx-loading-hero-meta">
                         <span className="sx-loading-badge">Local Inference</span>
                         <span>Ollama gemma4:e2b</span>
@@ -447,18 +448,18 @@ export default function Page() {
                       <span className="sx-mode-empty-icon">
                         <Icon name={mode === "deep" ? "icon-depth" : mode === "counter" ? "icon-branch" : "icon-bolt"} size={20} />
                       </span>
-                      <strong>{mode === "quick" ? "Quick Overview" : mode === "deep" ? "Deep Analysis" : "Counter Perspective"} has not been generated yet.</strong>
+                      <strong>{mode === "quick" ? "Quick Summary" : mode === "deep" ? "Deep Check" : "Other Side"} has not been run yet.</strong>
                     </div>
                     <p className="sx-mode-empty-desc">
                       {mode === "quick"
-                        ? "Extract the core claims and essential caveats in seconds."
+                        ? "Get the main points and what you need to know in seconds."
                         : mode === "deep"
-                        ? "Deep forensic audit of logical structure, supporting evidence, and rhetorical tactics."
-                        : "Steelmanned alternative interpretation and what evidence would resolve the claim."}
+                        ? "A thorough check of claims, evidence, and whether the reasoning holds up."
+                        : "The strongest counter-arguments, opposing views, and what proof would settle the debate."}
                     </p>
                     <button type="button" className="sx-btn sx-btn-sm" onClick={() => generateSingleMode(mode)}>
                       <Icon name="icon-search-plus" size={13} />
-                      <span>Generate {mode === "deep" ? "Deep" : mode === "counter" ? "Counter" : "Quick"}</span>
+                      <span>Run {mode === "deep" ? "Deep Check" : mode === "counter" ? "Other Side" : "Quick Summary"}</span>
                     </button>
                   </div>
                 ) : null}
@@ -481,8 +482,7 @@ export default function Page() {
               </button>
             </section>
           )}
-        </>
-      )}
+      </div>
 
       <footer className="sx-foot"><p>Local inference through Ollama. Perspectra can examine reasoning; it does not independently verify current facts or know an author’s intent.</p></footer>
     </main>
