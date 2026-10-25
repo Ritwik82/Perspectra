@@ -306,10 +306,6 @@ export function DebateArena() {
                 <div className="sx-chat-bubble sx-chat-typing">
                   <span className="sx-loading-dot" />
                   <span>{selectedPersona.name} is writing a response...</span>
-                  <button type="button" className="sx-inline-stop-btn" onClick={stopGenerating}>
-                    <Icon name="icon-close" size={12} />
-                    <span>Stop</span>
-                  </button>
                 </div>
               </div>
             )}

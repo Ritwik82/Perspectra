@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "Perspectra — before you believe it, take a closer look",
   description:
     "Before you believe it, take a closer look. Examine claims, reasoning, and counter-perspectives with Perspectra. Runs locally on this machine.",
+  icons: {
+    icon: "/icon.jpeg",
+    apple: "/icon.jpeg",
+  },
 };
 
 /**

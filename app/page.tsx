@@ -186,11 +186,12 @@ export default function Page() {
   return (
     <main className="sx-shell">
       <header className="sx-head">
-        <a className="sx-brand" href="#top">
-          <span className="sx-logo"><Icon name="icon-logo-search" size={18} /></span>
+        <div className="sx-brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon.jpeg" alt="Perspectra" className="sx-logo-img" />
           <span className="sx-wordmark">Perspectra</span>
           <span className="sx-tagline">think clearly. see the whole picture.</span>
-        </a>
+        </div>
         <div className="sx-head-actions">
           <span className="sx-privacy" title="Inference runs locally through Ollama"><Icon name="icon-info" size={13} />Local inference</span>
           <ThemeToggle />
