@@ -1,0 +1,385 @@
+{
+  "communities": {
+    "0": [
+      "app_page",
+      "app_page_empty_states",
+      "app_page_modes",
+      "components_emptystate",
+      "components_emptystate_emptystate",
+      "components_icon",
+      "components_icon_icon",
+      "components_inputpanel",
+      "components_inputpanel_inputpanel",
+      "components_inputpanel_inputpanel_getbuttonlabel",
+      "components_inputpanel_inputpanel_readfile",
+      "components_inputpanel_inputpanelprops",
+      "components_languagepicker",
+      "components_languagepicker_gemma_supported_languages",
+      "components_languagepicker_languagepicker",
+      "components_languagepicker_languagepicker_handleclear",
+      "components_languagepicker_languagepicker_handleclickoutside",
+      "components_languagepicker_languagepicker_handleselect",
+      "components_languagepicker_supportedlanguage",
+      "components_othersidepanel",
+      "components_othersidepanel_othersidepanel",
+      "components_reportcard",
+      "components_reportcard_download",
+      "components_reportcard_formattedtext",
+      "components_reportcard_reportcard",
+      "components_reportcard_sourcematch",
+      "components_themetoggle",
+      "components_themetoggle_themetoggle",
+      "components_themetoggle_themetoggle_toggle",
+      "components_verdictbadge",
+      "components_verdictbadge_tone",
+      "components_verdictbadge_verdictbadge",
+      "lib_ollama_chatoptions",
+      "lib_parse_tomarkdown",
+      "lib_types",
+      "lib_types_analysismode",
+      "lib_types_analysisrun",
+      "lib_types_analyzeerror",
+      "lib_types_analyzeresult",
+      "lib_types_counterview",
+      "lib_types_moderunstate",
+      "lib_types_tactic",
+      "lib_types_verdict",
+      "lib_types_verdicts",
+      "package_dependencies_react",
+      "ref_react"
+    ],
+    "1": [
+      "app_api_analyze_route",
+      "app_api_analyze_route_dynamic",
+      "app_api_analyze_route_fail",
+      "app_api_analyze_route_maxduration",
+      "app_api_analyze_route_post",
+      "app_api_analyze_route_runtime",
+      "lib_analysis_schema_analysisschema",
+      "lib_analysis_schema_evidenceitem",
+      "lib_analysis_schema_modeinstructions",
+      "lib_analysis_schema_section",
+      "lib_analysis_schema_ts_lib_analysis_schema",
+      "lib_ollama",
+      "lib_ollama_base_num_ctx",
+      "lib_ollama_callonce",
+      "lib_ollama_chat",
+      "lib_ollama_chatoutcome",
+      "lib_ollama_ollama_url",
+      "lib_ollama_ollamachatresponse",
+      "lib_ollama_ollamaconfig",
+      "lib_ollama_ollamaerror",
+      "lib_ollama_ollamaerror_constructor",
+      "lib_ollama_retry_num_ctx",
+      "lib_prompt",
+      "lib_prompt_base_path",
+      "lib_prompt_getpromptstats",
+      "lib_prompt_getsystemprompt",
+      "lib_prompt_prompt_dir",
+      "lib_prompt_readorthrow",
+      "lib_types_analyzerequest",
+      "ref_node_fs",
+      "ref_node_path"
+    ],
+    "2": [
+      "app_globals",
+      "app_layout",
+      "app_layout_metadata",
+      "app_layout_rootlayout",
+      "next_config",
+      "next_config_nextconfig",
+      "package",
+      "package_dependencies",
+      "package_dependencies_next",
+      "package_dependencies_react_dom",
+      "package_devdependencies",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_start",
+      "package_scripts_typecheck",
+      "package_version",
+      "ref_next",
+      "ref_react_dom",
+      "ref_types_node",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_typescript"
+    ],
+    "3": [
+      "app_api_persona_chat_route",
+      "app_api_persona_chat_route_dynamic",
+      "app_api_persona_chat_route_maxduration",
+      "app_api_persona_chat_route_num_ctx",
+      "app_api_persona_chat_route_ollama_url",
+      "app_api_persona_chat_route_post",
+      "app_api_persona_chat_route_runtime",
+      "app_api_persona_evaluate_route",
+      "app_api_persona_evaluate_route_dynamic",
+      "app_api_persona_evaluate_route_maxduration",
+      "app_api_persona_evaluate_route_num_ctx",
+      "app_api_persona_evaluate_route_ollama_url",
+      "app_api_persona_evaluate_route_post",
+      "app_api_persona_evaluate_route_runtime",
+      "components_persona_debatearena",
+      "components_persona_debateevaluationcard",
+      "components_persona_debateevaluationcard_debateevaluationcard",
+      "components_persona_personaselector",
+      "components_persona_personaselector_personaselector",
+      "lib_persona_prompts",
+      "lib_persona_prompts_getdebateevaluationprompt",
+      "lib_persona_prompts_getpersonaprompt",
+      "lib_persona_prompts_personas",
+      "lib_persona_types",
+      "lib_persona_types_chatmessage",
+      "lib_persona_types_debateevaluation",
+      "lib_persona_types_personaid",
+      "lib_persona_types_personainfo"
+    ],
+    "4": [
+      "argparse",
+      "base64",
+      "json",
+      "lib_analysis_schema_analysis_schema",
+      "lib_analysis_schema_mode_instructions",
+      "lib_analysis_schema_py_lib_analysis_schema",
+      "lib_analysis_schema_rationale_1",
+      "path",
+      "pathlib",
+      "re",
+      "sys",
+      "tests_run_all",
+      "tests_run_all_build_messages",
+      "tests_run_all_call",
+      "tests_run_all_discover",
+      "tests_run_all_extract_score",
+      "tests_run_all_extract_verdict",
+      "tests_run_all_main",
+      "tests_run_all_print_row",
+      "tests_run_all_rationale_2",
+      "tests_run_all_run_one",
+      "tests_run_all_write_summary",
+      "time",
+      "urllib_error",
+      "urllib_request"
+    ],
+    "5": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "6": [
+      "lib_parse",
+      "lib_parse_cleanstring",
+      "lib_parse_islegitimatetactic",
+      "lib_parse_modelanalysis",
+      "lib_parse_normalizedtacticname",
+      "lib_parse_nullabletext",
+      "lib_parse_parseanalysis",
+      "lib_parse_parsemodelresponse",
+      "lib_parse_runparserselfcheck",
+      "lib_parse_sanitizeheading",
+      "lib_parse_section_limits",
+      "lib_parse_valid_modes",
+      "lib_types_analysissection",
+      "lib_types_analyzemeta",
+      "lib_types_counterargumentitem",
+      "lib_types_openquestion"
+    ],
+    "7": [
+      "app_page_fingerprint",
+      "app_page_page",
+      "app_page_page_createrun",
+      "app_page_page_executemode",
+      "app_page_page_generateselected",
+      "app_page_page_generatesinglemode",
+      "app_page_page_startfresh",
+      "app_page_page_stopanalysis",
+      "app_page_page_togglemode",
+      "components_persona_debatearena_debatearena",
+      "components_persona_debatearena_debatearena_analyzedebate",
+      "components_persona_debatearena_debatearena_handlereset",
+      "components_persona_debatearena_debatearena_sendmessage",
+      "components_persona_debatearena_debatearena_startdebate",
+      "components_persona_debatearena_debatearena_stopgenerating"
+    ]
+  },
+  "cohesion": {
+    "0": 0.08888888888888889,
+    "1": 0.1010752688172043,
+    "2": 0.08374384236453201,
+    "3": 0.14814814814814814,
+    "4": 0.12333333333333334,
+    "5": 0.10526315789473684,
+    "6": 0.2,
+    "7": 0.17142857142857143
+  },
+  "gods": [
+    {
+      "id": "components_icon_icon",
+      "label": "Icon()",
+      "degree": 19
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "app_page_page",
+      "label": "Page()",
+      "degree": 14
+    },
+    {
+      "id": "components_persona_debatearena_debatearena",
+      "label": "DebateArena()",
+      "degree": 11
+    },
+    {
+      "id": "components_reportcard_reportcard",
+      "label": "ReportCard()",
+      "degree": 10
+    },
+    {
+      "id": "lib_types_analysismode",
+      "label": "AnalysisMode",
+      "degree": 9
+    },
+    {
+      "id": "lib_persona_types_personaid",
+      "label": "PersonaId",
+      "degree": 7
+    },
+    {
+      "id": "components_inputpanel_inputpanel",
+      "label": "InputPanel()",
+      "degree": 7
+    },
+    {
+      "id": "components_languagepicker_languagepicker",
+      "label": "LanguagePicker()",
+      "degree": 7
+    },
+    {
+      "id": "lib_parse_parsemodelresponse",
+      "label": "parseModelResponse()",
+      "degree": 7
+    }
+  ],
+  "surprises": [
+    {
+      "source": "InputPanelProps",
+      "target": "AnalysisMode",
+      "source_files": [
+        "components/InputPanel.tsx",
+        "lib/types.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; peripheral node `InputPanelProps` unexpectedly reaches hub `AnalysisMode`"
+    },
+    {
+      "source": "Page()",
+      "target": "Icon()",
+      "source_files": [
+        "app/page.tsx",
+        "components/Icon.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "Page()",
+      "target": "InputPanel()",
+      "source_files": [
+        "app/page.tsx",
+        "components/InputPanel.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "Page()",
+      "target": "ReportCard()",
+      "source_files": [
+        "app/page.tsx",
+        "components/ReportCard.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "Page()",
+      "target": "ThemeToggle()",
+      "source_files": [
+        "app/page.tsx",
+        "components/ThemeToggle.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `next` connect `package.json` to `ollama.ts`, `DebateArena.tsx`?",
+      "why": "High betweenness centrality (0.165) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `types.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08888888888888889 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `react` connect `types.ts` to `package.json`, `DebateArena.tsx`?",
+      "why": "High betweenness centrality (0.080) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `ollama.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1010752688172043 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `AnalysisMode` connect `types.ts` to `ollama.ts`, `parse.ts`?",
+      "why": "High betweenness centrality (0.055) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `package.json` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08374384236453201 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `DebateArena.tsx` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.14814814814814814 - nodes in this community are weakly interconnected."
+    }
+  ]
+}
