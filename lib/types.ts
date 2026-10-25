@@ -19,12 +19,24 @@ export const VERDICTS: Verdict[] = [
 ];
 
 export interface Tactic {
-  /** Short name of the rhetorical move, e.g. "vague majority appeal". */
+  /** Short name of the rhetorical move strictly from the allowed taxonomy. */
   name: string;
   /** The exact span from the post that triggered the flag. */
   quote: string;
+  /** One-line explanation of the manipulation. */
+  reason?: string;
   sourceStart?: number | null;
   sourceEnd?: number | null;
+}
+
+export interface OpenQuestion {
+  question: string;
+  evidenceNeeded: string;
+}
+
+export interface CounterArgumentItem {
+  claimQuote: string;
+  counter: string;
 }
 
 export interface CounterView {
@@ -68,7 +80,8 @@ export interface AnalyzeResult {
   /** Mode-specific extended reasoning. Present for Deep Analysis. */
   deepAnalysis: string;
   /** Explicit, evidence-aware objections. Present for Explore Counterarguments. */
-  counterArguments: string[];
+  openQuestions?: OpenQuestion[];
+  counterArguments: CounterArgumentItem[];
   scoreRationale: string;
   score: number | null;
   verdict: string;

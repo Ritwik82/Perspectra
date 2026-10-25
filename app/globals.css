@@ -2684,3 +2684,83 @@ body, textarea { caret-color: var(--sx-primary); }
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Phase 1: Open Questions, Structured Counter-Arguments & Tactic Reasons */
+.sx-open-questions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sx-open-question-item {
+  padding: 12px 14px;
+  background: var(--sx-surface-2);
+  border: 1px solid var(--sx-border);
+  border-radius: var(--sx-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sx-question-text {
+  margin: 0;
+  font-size: var(--sx-text-sm);
+  color: var(--sx-fg);
+  line-height: 1.5;
+}
+.sx-evidence-needed {
+  margin: 0;
+  font-size: var(--sx-text-sm);
+  color: var(--sx-fg-2);
+  line-height: 1.5;
+}
+
+.sx-counter-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sx-counter-item {
+  padding: 12px 14px;
+  background: var(--sx-surface-2);
+  border: 1px solid var(--sx-border);
+  border-left: 3px solid var(--sx-accent);
+  border-radius: var(--sx-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sx-counter-quote {
+  margin: 0;
+  font-size: var(--sx-text-sm);
+  color: var(--sx-fg-2);
+  font-style: italic;
+  line-height: 1.5;
+}
+.sx-counter-counters-label {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--sx-muted);
+  font-size: var(--sx-text-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+.sx-counter-text {
+  margin: 0;
+  font-size: var(--sx-text-sm);
+  color: var(--sx-fg);
+  line-height: 1.6;
+}
+
+.sx-tactic-reason {
+  margin: 0;
+  font-size: var(--sx-text-micro);
+  color: var(--sx-muted);
+  line-height: 1.4;
+  padding-left: var(--sx-space-3);
+}

@@ -47,46 +47,47 @@ export function ReportCard({
         {result.verdict && <VerdictBadge verdict={result.verdict} />}
 
         <div className="sx-report-head-meta-row">
-          <div
-            className="sx-score"
-            aria-label={scoreApplicable ? `Evidence score ${score} out of 10` : "Evidence score not applicable"}
-          >
-            <span className="sx-score-num">
-              {scoreApplicable ? score : "N/A"}
-              {scoreApplicable && <span className="sx-score-den">/10</span>}
-            </span>
-            {scoreApplicable && (
-              <span className="sx-score-track">
-                <i style={{ width: `${Math.min(100, Math.max(0, score * 10))}%` }} />
-              </span>
-            )}
-            {!scoreApplicable && <span className="sx-score-na">Not applicable</span>}
-          </div>
+          {scoreApplicable && (
+            <>
+              <div
+                className="sx-score"
+                aria-label={`Evidence score ${score} out of 10`}
+              >
+                <span className="sx-score-num">
+                  {score}
+                  <span className="sx-score-den">/10</span>
+                </span>
+                <span className="sx-score-track">
+                  <i style={{ width: `${Math.min(100, Math.max(0, score * 10))}%` }} />
+                </span>
+              </div>
 
-          <details className="sx-scoring-explainer">
-            <summary className="sx-scoring-explainer-trigger">
-              <Icon name="icon-info" size={13} />
-              <span>How is this scored?</span>
-            </summary>
-            <div className="sx-scoring-explainer-body">
-              <div className="sx-score-tier">
-                <span className="sx-score-pill is-high">8 – 10</span>
-                <span><strong>Strong Evidence:</strong> Clear facts, credible sources, and sound logic with no misleading claims.</span>
-              </div>
-              <div className="sx-score-tier">
-                <span className="sx-score-pill is-mid">5 – 7</span>
-                <span><strong>Moderate Support:</strong> Makes sensible points, but relies partly on assumptions or lacks independent proof.</span>
-              </div>
-              <div className="sx-score-tier">
-                <span className="sx-score-pill is-low">1 – 4</span>
-                <span><strong>Weak / Flawed:</strong> Uses anecdotes as proof, confuses correlation with cause, or uses logical fallacies.</span>
-              </div>
-              <div className="sx-score-tier">
-                <span className="sx-score-pill is-na">N/A</span>
-                <span><strong>Not Applicable:</strong> Personal opinions, questions, or creative text with no factual claim to score.</span>
-              </div>
-            </div>
-          </details>
+              <details className="sx-scoring-explainer">
+                <summary className="sx-scoring-explainer-trigger">
+                  <Icon name="icon-info" size={13} />
+                  <span>How is this scored?</span>
+                </summary>
+                <div className="sx-scoring-explainer-body">
+                  <div className="sx-score-tier">
+                    <span className="sx-score-pill is-high">8 – 10</span>
+                    <span><strong>Strong Evidence:</strong> Clear facts, credible sources, and sound logic with no misleading claims.</span>
+                  </div>
+                  <div className="sx-score-tier">
+                    <span className="sx-score-pill is-mid">5 – 7</span>
+                    <span><strong>Moderate Support:</strong> Makes sensible points, but relies partly on assumptions or lacks independent proof.</span>
+                  </div>
+                  <div className="sx-score-tier">
+                    <span className="sx-score-pill is-low">1 – 4</span>
+                    <span><strong>Weak / Flawed:</strong> Uses anecdotes as proof, confuses correlation with cause, or uses logical fallacies.</span>
+                  </div>
+                  <div className="sx-score-tier">
+                    <span className="sx-score-pill is-na">N/A</span>
+                    <span><strong>Not Applicable:</strong> Personal opinions, questions, or creative text with no factual claim to score.</span>
+                  </div>
+                </div>
+              </details>
+            </>
+          )}
 
           <span className="sx-meta">
             {result.meta.model} · {seconds}s · {result.meta.tokPerS} tok/s · {result.mode}
@@ -153,14 +154,39 @@ export function ReportCard({
 
         {result.scoreRationale && <p className="sx-score-rationale">{result.scoreRationale}</p>}
 
+        {result.openQuestions && result.openQuestions.length > 0 && (
+          <section className="sx-block sx-open-questions">
+            <h3 className="sx-label">Open questions & needed evidence</h3>
+            <ul className="sx-open-questions-list">
+              {result.openQuestions.map((q, i) => (
+                <li key={i} className="sx-open-question-item">
+                  <p className="sx-question-text">
+                    <strong>Question:</strong> &ldquo;{q.question}&rdquo;
+                  </p>
+                  <p className="sx-evidence-needed">
+                    <strong>Evidence that would answer it:</strong> {q.evidenceNeeded}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {result.counterArguments.length > 0 && (
           <section className="sx-block sx-counter-list">
             <h3 className="sx-label">Arguments from the other side</h3>
-            <ol>
+            <ul className="sx-counter-items">
               {result.counterArguments.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index} className="sx-counter-item">
+                  {item.claimQuote && (
+                    <blockquote className="sx-counter-quote">
+                      <span className="sx-counter-counters-label">Counters claim:</span> &ldquo;{item.claimQuote}&rdquo;
+                    </blockquote>
+                  )}
+                  <p className="sx-counter-text">{item.counter}</p>
+                </li>
               ))}
-            </ol>
+            </ul>
           </section>
         )}
 
@@ -178,6 +204,7 @@ export function ReportCard({
                 <li key={i} className="sx-tactic">
                   <span className="sx-tactic-name">{tactic.name}</span>
                   <blockquote className="sx-tactic-quote">&ldquo;{tactic.quote}&rdquo;</blockquote>
+                  {tactic.reason && <p className="sx-tactic-reason">{tactic.reason}</p>}
                   {sourceText && (
                     <p className="sx-evidence-match">
                       {sourceText.includes(tactic.quote) ? (
