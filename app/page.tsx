@@ -35,7 +35,6 @@ export default function Page() {
   const [runs, setRuns] = useState<AnalysisRun[]>([]);
   const [activeRunId, setActiveRunId] = useState<string | null>(null);
   const [loadingMode, setLoadingMode] = useState<AnalysisMode | null>(null);
-  const [batchPosition, setBatchPosition] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const [highlightedQuote, setHighlightedQuote] = useState("");
   const [error, setError] = useState<AnalyzeError | null>(null);
@@ -92,7 +91,6 @@ export default function Page() {
       abortControllerRef.current = null;
     }
     setLoadingMode(null);
-    setBatchPosition(0);
   }
 
   async function executeMode(run: AnalysisRun, requestedMode: AnalysisMode): Promise<boolean> {
@@ -152,22 +150,7 @@ export default function Page() {
     await executeMode(run, mode);
   }
 
-  async function generateAll() {
-    if ((!text.trim() && !image) || loadingMode) return;
-    const run = activeRun && !isStale ? activeRun : createRun();
-    const missing = MODES.filter((item) => !run.results[item]);
-    for (let index = 0; index < missing.length; index++) {
-      const nextMode = missing[index];
-      setMode(nextMode);
-      setBatchPosition(index + 1);
-      setRuns((existing) => existing.map((item) => item.id === run.id
-        ? { ...item, states: { ...item.states, [nextMode]: "queued" } }
-        : item));
-      const succeeded = await executeMode(run, nextMode);
-      if (!succeeded) break;
-    }
-    setBatchPosition(0);
-  }
+
 
   function startFresh() {
     setRuns([]);
@@ -248,9 +231,6 @@ export default function Page() {
         setFocus={setFocus}
         outputLanguage={outputLanguage}
         setOutputLanguage={setOutputLanguage}
-        onGenerateAll={generateAll}
-        batchRunning={!!loadingMode && batchPosition > 0}
-        batchPosition={batchPosition}
       />
 
       {activeRun && (
@@ -307,21 +287,53 @@ export default function Page() {
                 })}
               </div>
 
-              {loadingMode && <div className="sx-loading sx-loading-inline" role="status" aria-live="polite">
-                <span className="sx-loading-dot" />
-                <span className="sx-loading-text">{batchPosition ? `Generating ${loadingMode} · ${batchPosition} of 3` : `Generating ${loadingMode} analysis`}</span>
-                <span className="sx-loading-time">{elapsed}s</span>
-                <button type="button" className="sx-inline-stop-btn" onClick={stopAnalysis}>
-                  <Icon name="icon-close" size={12} />
-                  <span>Stop</span>
-                </button>
-              </div>}
+              {loadingMode && (
+                <div className="sx-loading sx-loading-inline" role="status" aria-live="polite">
+                  <span className="sx-loading-dot" />
+                  <span className="sx-loading-text">Generating {loadingMode} analysis...</span>
+                  <span className="sx-loading-time">{elapsed}s</span>
+                  <button type="button" className="sx-inline-stop-btn" onClick={stopAnalysis}>
+                    <Icon name="icon-close" size={12} />
+                    <span>Stop</span>
+                  </button>
+                </div>
+              )}
 
-              {error && <section className="sx-error" role="alert"><p className="sx-error-title">{error.error}</p>{error.detail && <p className="sx-error-detail">{error.detail}</p>}<button className="sx-ghost-btn" onClick={generateSelected}>Retry {mode}</button></section>}
+              {error && (
+                <section className="sx-error" role="alert">
+                  <p className="sx-error-title">{error.error}</p>
+                  {error.detail && <p className="sx-error-detail">{error.detail}</p>}
+                  <button className="sx-ghost-btn" onClick={generateSelected}>Retry {mode}</button>
+                </section>
+              )}
 
               <div id={`sx-panel-${activeRun.id}-${mode}`} role="tabpanel" aria-labelledby={`sx-tab-${activeRun.id}-${mode}`}>
-                {activeResult && !loadingMode && <ReportCard key={`${activeRun.id}-${mode}`} result={activeResult} sourceText={activeRun.text} onEvidenceSelect={setHighlightedQuote} />}
-                {!activeResult && !loadingMode && !error && <div className="sx-mode-empty"><span>{mode === "quick" ? "A quick read, when you want it." : mode === "deep" ? "A closer examination, when you ask for it." : "The strongest fair challenge, when you need it."}</span><button className="sx-inline-action" onClick={generateSelected}>Generate {mode} <Icon name="icon-arrow-right" size={14} /></button></div>}
+                {activeResult ? (
+                  <ReportCard
+                    key={`${activeRun.id}-${mode}`}
+                    result={activeResult}
+                    sourceText={activeRun.text}
+                    onEvidenceSelect={setHighlightedQuote}
+                  />
+                ) : loadingMode === mode ? (
+                  <div className="sx-mode-empty">
+                    <span className="sx-loading-dot" />
+                    <span>Generating {mode} analysis now...</span>
+                  </div>
+                ) : !error ? (
+                  <div className="sx-mode-empty">
+                    <span>
+                      {mode === "quick"
+                        ? "A quick read, when you want it."
+                        : mode === "deep"
+                        ? "A closer examination, when you ask for it."
+                        : "The strongest fair challenge, when you need it."}
+                    </span>
+                    <button className="sx-inline-action" onClick={generateSelected}>
+                      Generate {mode} <Icon name="icon-arrow-right" size={14} />
+                    </button>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

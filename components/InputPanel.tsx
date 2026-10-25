@@ -22,9 +22,6 @@ export interface InputPanelProps {
   setFocus: (focus: string) => void;
   outputLanguage: string;
   setOutputLanguage: (language: string) => void;
-  onGenerateAll: () => void;
-  batchRunning: boolean;
-  batchPosition: number;
 }
 
 export function InputPanel({
@@ -44,9 +41,6 @@ export function InputPanel({
   setFocus,
   outputLanguage,
   setOutputLanguage,
-  onGenerateAll,
-  batchRunning,
-  batchPosition,
 }: InputPanelProps) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -76,6 +70,7 @@ export function InputPanel({
         <span className="sx-input-icon"><Icon name="icon-search-plus" size={17} /></span>
         <label htmlFor="post-input">What would you like to examine?</label>
       </div>
+
       <div
         className={`sx-drop${dragging ? " is-dragging" : ""}`}
         onDragOver={(e) => {
@@ -148,29 +143,63 @@ export function InputPanel({
 
           <span className="sx-hint">Language is matched automatically</span>
         </div>
-
       </div>
 
+      {/* Selectable Mode Cards with visible Checkmark */}
       <fieldset className="sx-mode-fieldset" disabled={loading}>
-        <legend>Analysis mode</legend>
-        <div className="sx-mode-picker" role="group" aria-label="Analysis mode">
-          <button type="button" className="sx-mode-option" aria-pressed={mode === "quick"} onClick={() => setMode("quick")}>
-            <span className="sx-mode-name"><Icon name="icon-bolt" />Quick</span>
-            <span className="sx-mode-description">The essential read</span>
+        <legend className="sx-mode-legend">Select Analysis Mode</legend>
+        <div className="sx-mode-cards-grid" role="radiogroup" aria-label="Select analysis mode">
+          <button
+            type="button"
+            role="radio"
+            aria-checked={mode === "quick"}
+            className={`sx-mode-card${mode === "quick" ? " is-selected" : ""}`}
+            onClick={() => setMode("quick")}
+          >
+            <div className="sx-mode-card-top">
+              <span className="sx-mode-card-icon"><Icon name="icon-bolt" size={16} /></span>
+              <span className={`sx-mode-check${mode === "quick" ? " is-checked" : ""}`}>
+                {mode === "quick" ? <Icon name="icon-check" size={11} /> : null}
+              </span>
+            </div>
+            <strong className="sx-mode-card-title">Quick Overview</strong>
+            <span className="sx-mode-card-desc">The essential read: main claims & key caveats</span>
           </button>
-          <button type="button" className="sx-mode-option" aria-pressed={mode === "deep"} onClick={() => setMode("deep")}>
-            <span className="sx-mode-name"><Icon name="icon-depth" />Deep</span>
-            <span className="sx-mode-description">Reasoning & evidence</span>
+
+          <button
+            type="button"
+            role="radio"
+            aria-checked={mode === "deep"}
+            className={`sx-mode-card${mode === "deep" ? " is-selected" : ""}`}
+            onClick={() => setMode("deep")}
+          >
+            <div className="sx-mode-card-top">
+              <span className="sx-mode-card-icon"><Icon name="icon-depth" size={16} /></span>
+              <span className={`sx-mode-check${mode === "deep" ? " is-checked" : ""}`}>
+                {mode === "deep" ? <Icon name="icon-check" size={11} /> : null}
+              </span>
+            </div>
+            <strong className="sx-mode-card-title">Deep Analysis</strong>
+            <span className="sx-mode-card-desc">Comprehensive reasoning, evidence audit & tactics</span>
           </button>
-          <button type="button" className="sx-mode-option" aria-pressed={mode === "counter"} onClick={() => setMode("counter")}>
-            <span className="sx-mode-name"><Icon name="icon-branch" />Counter</span>
-            <span className="sx-mode-description">Explore challenges</span>
+
+          <button
+            type="button"
+            role="radio"
+            aria-checked={mode === "counter"}
+            className={`sx-mode-card${mode === "counter" ? " is-selected" : ""}`}
+            onClick={() => setMode("counter")}
+          >
+            <div className="sx-mode-card-top">
+              <span className="sx-mode-card-icon"><Icon name="icon-branch" size={16} /></span>
+              <span className={`sx-mode-check${mode === "counter" ? " is-checked" : ""}`}>
+                {mode === "counter" ? <Icon name="icon-check" size={11} /> : null}
+              </span>
+            </div>
+            <strong className="sx-mode-card-title">Counter Perspective</strong>
+            <span className="sx-mode-card-desc">Steelmanned challenges & what would settle the debate</span>
           </button>
         </div>
-          <p className="sx-mode-help">Each mode asks a different question of the same post.</p>
-          <button type="button" className="sx-all-modes" onClick={onGenerateAll} disabled={!ready || batchRunning}>
-          {batchRunning ? `Generating all · ${batchPosition}/3` : "Generate all three · one at a time"}
-          </button>
       </fieldset>
 
       <details className="sx-focus-details">

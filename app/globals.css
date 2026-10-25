@@ -2016,3 +2016,105 @@ body, textarea { caret-color: var(--sx-primary); }
   background: var(--sx-accent-ink) !important;
   color: #ffffff !important;
 }
+
+
+/* ── Selectable Mode Cards with Checkmark ────────────────── */
+.sx-mode-fieldset {
+  margin: var(--sx-space-5) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.sx-mode-legend {
+  font-size: var(--sx-text-sm);
+  font-weight: 600;
+  color: var(--sx-fg);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.sx-mode-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.sx-mode-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  background: var(--sx-surface-2);
+  border: 1.5px solid var(--sx-border);
+  border-radius: var(--sx-radius-card);
+  color: var(--sx-fg);
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--sx-dur) var(--sx-ease);
+  position: relative;
+}
+
+.sx-mode-card:hover:not(:disabled) {
+  border-color: var(--sx-border-strong);
+  background: var(--sx-surface-3);
+  transform: translateY(-1px);
+}
+
+.sx-mode-card.is-selected {
+  background: var(--sx-surface);
+  border-color: var(--sx-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.sx-mode-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.sx-mode-card-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--sx-surface-3);
+  color: var(--sx-muted);
+  transition: all var(--sx-dur) var(--sx-ease);
+}
+
+.sx-mode-card.is-selected .sx-mode-card-icon {
+  background: var(--sx-primary);
+  color: #ffffff;
+}
+
+.sx-mode-check {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sx-border-strong);
+  background: transparent;
+  color: transparent;
+  transition: all var(--sx-dur) var(--sx-ease);
+}
+
+.sx-mode-check.is-checked {
+  background: var(--sx-primary);
+  border-color: var(--sx-primary);
+  color: #ffffff;
+}
+
+.sx-mode-card-title {
+  font-size: var(--sx-text-sm);
+  font-weight: 600;
+  color: var(--sx-fg);
+  margin-bottom: 4px;
+}
+
+.sx-mode-card-desc {
+  font-size: var(--sx-text-micro);
+  color: var(--sx-muted);
+  line-height: 1.45;
+}
