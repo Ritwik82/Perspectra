@@ -1,3 +1,5 @@
+"use client";
+
 const TONE: Record<string, "success" | "warn" | "danger" | "neutral"> = {
   "Strong argument": "success",
   "Reasonable but limited": "warn",
@@ -8,10 +10,15 @@ const TONE: Record<string, "success" | "warn" | "danger" | "neutral"> = {
 };
 
 export function VerdictBadge({ verdict }: { verdict: string }) {
+  if (!verdict) return null;
   const tone = TONE[verdict] ?? "neutral";
+  const isShort = verdict.length <= 45;
+
   return (
-    <span className="sx-verdict" data-tone={tone}>
-      {verdict || "Unreadable verdict"}
-    </span>
+    <div className={`sx-verdict-wrapper${isShort ? " is-badge-mode" : " is-card-mode"}`}>
+      <span className={`sx-verdict${isShort ? " is-badge" : " is-descriptive"}`} data-tone={tone}>
+        {verdict}
+      </span>
+    </div>
   );
 }

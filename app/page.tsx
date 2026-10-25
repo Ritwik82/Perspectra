@@ -5,6 +5,7 @@ import { Icon } from "@/components/Icon";
 import { InputPanel } from "@/components/InputPanel";
 import { ReportCard } from "@/components/ReportCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { DebateArena } from "@/components/persona/DebateArena";
 import type { AnalysisMode, AnalysisRun, AnalyzeError, AnalyzeResult } from "@/lib/types";
 
 const MODES: AnalysisMode[] = ["quick", "deep", "counter"];
@@ -24,6 +25,7 @@ function fingerprint(values: string[]) {
 }
 
 export default function Page() {
+  const [activeView, setActiveView] = useState<"analyzer" | "debate">("analyzer");
   const [text, setText] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
@@ -195,7 +197,35 @@ export default function Page() {
         </div>
       </header>
 
-      <section className="sx-intro" id="top">
+      <nav className="sx-view-tabs" role="tablist" aria-label="Feature navigation">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeView === "analyzer"}
+          className={`sx-view-tab${activeView === "analyzer" ? " is-active" : ""}`}
+          onClick={() => setActiveView("analyzer")}
+        >
+          <Icon name="icon-search-plus" size={15} />
+          <span>Post Analyser</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeView === "debate"}
+          className={`sx-view-tab${activeView === "debate" ? " is-active" : ""}`}
+          onClick={() => setActiveView("debate")}
+        >
+          <Icon name="icon-people" size={16} />
+          <span>Debate Arena</span>
+          <span className="sx-tab-badge">4 Personas</span>
+        </button>
+      </nav>
+
+      {activeView === "debate" ? (
+        <DebateArena />
+      ) : (
+        <>
+          <section className="sx-intro" id="top">
         <h1 className="sx-h1">Before you believe it,<br /><span>take a closer look.</span></h1>
         <p className="sx-lede">Read the claim. Inspect what supports it. Keep the context that changes what it means.</p>
       </section>
@@ -297,10 +327,21 @@ export default function Page() {
         </section>
       )}
 
-      {!loadingMode && <section className="sx-perspectives" aria-labelledby="sx-perspectives-title">
-        <div><p className="sx-perspectives-kicker">Future direction</p><h2 id="sx-perspectives-title">More than one point of view.</h2><p>Explore different perspectives on a claim. This feature is not active yet.</p></div>
-        <span className="sx-coming-soon">Coming later</span>
-      </section>}
+      {!loadingMode && (
+            <section className="sx-perspectives" aria-labelledby="sx-perspectives-title">
+              <div>
+                <p className="sx-perspectives-kicker">Interactive Arena</p>
+                <h2 id="sx-perspectives-title">Debate with distinct archetypes.</h2>
+                <p>Talk to The Conspiracy Theorist, Entrepreneur, Cynical Redditor, or Gym Bro, then get an impartial referee analysis.</p>
+              </div>
+              <button type="button" className="sx-btn sx-btn-arena" onClick={() => setActiveView("debate")}>
+                <span>Enter Debate Arena</span>
+                <Icon name="icon-arrow-right" size={14} />
+              </button>
+            </section>
+          )}
+        </>
+      )}
 
       <footer className="sx-foot"><p>Local inference through Ollama. Perspectra can examine reasoning; it does not independently verify current facts or know an author’s intent.</p></footer>
     </main>
