@@ -258,7 +258,7 @@ export default function Page() {
       ) : (
         <>
           <section className="sx-intro" id="top">
-        <h1 className="sx-h1">Before you believe it,<br /><span>take a closer look.</span></h1>
+        <h1 className="sx-h1">Before you believe it,<br /><span className="sx-h1-gradient">take a closer look.</span></h1>
         <p className="sx-lede">Read the claim. Inspect what supports it. Keep the context that changes what it means.</p>
       </section>
 
@@ -305,16 +305,38 @@ export default function Page() {
 
           <div className="sx-source-analysis">
             <aside className="sx-source" aria-label="Source post">
-              <h3>The post</h3>
-              {activeRun.imageName && activeRun.imageData && <img className="sx-source-image" src={activeRun.imageData} alt={`Submitted screenshot: ${activeRun.imageName}`} />}
-              {activeRun.text && <p id="sx-source-post">{highlightedQuote && activeRun.text.includes(highlightedQuote)
-                ? <>{activeRun.text.slice(0, activeRun.text.indexOf(highlightedQuote))}<mark>{highlightedQuote}</mark>{activeRun.text.slice(activeRun.text.indexOf(highlightedQuote) + highlightedQuote.length)}</>
-                : activeRun.text}</p>}
+              <div className="sx-source-head">
+                <span className="sx-source-badge">
+                  <Icon name="icon-file" size={13} />
+                  <span>Original Post</span>
+                </span>
+                {activeRun.text && (
+                  <span className="sx-source-count">{activeRun.text.length.toLocaleString()} chars</span>
+                )}
+              </div>
+              {activeRun.imageName && activeRun.imageData && (
+                <img className="sx-source-image" src={activeRun.imageData} alt={`Submitted screenshot: ${activeRun.imageName}`} />
+              )}
+              {activeRun.text && (
+                <p id="sx-source-post">
+                  {highlightedQuote && activeRun.text.includes(highlightedQuote) ? (
+                    <>
+                      {activeRun.text.slice(0, activeRun.text.indexOf(highlightedQuote))}
+                      <mark>{highlightedQuote}</mark>
+                      {activeRun.text.slice(activeRun.text.indexOf(highlightedQuote) + highlightedQuote.length)}
+                    </>
+                  ) : (
+                    activeRun.text
+                  )}
+                </p>
+              )}
               {activeRun.imageName && <p className="sx-source-filename">Image: {activeRun.imageName}</p>}
-              {(activeRun.focus || activeRun.outputLanguage) && <div className="sx-source-options">
-                {activeRun.focus && <p><b>Focus:</b> {activeRun.focus}</p>}
-                {activeRun.outputLanguage && <p><b>Response language:</b> {activeRun.outputLanguage}</p>}
-              </div>}
+              {(activeRun.focus || activeRun.outputLanguage) && (
+                <div className="sx-source-options">
+                  {activeRun.focus && <p><b>Focus:</b> {activeRun.focus}</p>}
+                  {activeRun.outputLanguage && <p><b>Response language:</b> {activeRun.outputLanguage}</p>}
+                </div>
+              )}
               {isStale && <p className="sx-stale-note">The editor has changed. These results still refer to the submitted version above.</p>}
             </aside>
 
@@ -323,42 +345,50 @@ export default function Page() {
                 {MODES.map((item) => {
                   const state = activeRun.states[item];
                   const hasResult = !!activeRun.results[item];
-                  return <button key={item} id={`sx-tab-${activeRun.id}-${item}`} role="tab" aria-controls={`sx-panel-${activeRun.id}-${item}`} aria-selected={mode === item} tabIndex={mode === item ? 0 : -1} onKeyDown={(event) => {
-                    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
-                    event.preventDefault();
-                    const current = MODES.indexOf(item);
-                    const next = event.key === "Home" ? MODES[0] : event.key === "End" ? MODES[2] : MODES[(current + (event.key === "ArrowRight" ? 1 : 2)) % 3];
-                    setMode(next);
-                    document.getElementById(`sx-tab-${activeRun.id}-${next}`)?.focus();
-                  }} onClick={() => {
-                    setMode(item);
-                    if (lastCompletedMode === item) setLastCompletedMode(null);
-                  }}>
-                    <span>{item === "quick" ? "Quick" : item === "deep" ? "Deep" : "Counter"}</span>
-                    <span className={`sx-tab-state is-${hasResult ? "complete" : state}`}>{hasResult ? "Ready" : state === "running" ? "Running" : state === "queued" ? "Queued" : state === "error" ? "Failed" : "Not run"}</span>
-                  </button>;
+                  const isTabRunning = loadingMode === item;
+                  return (
+                    <button
+                      key={item}
+                      id={`sx-tab-${activeRun.id}-${item}`}
+                      role="tab"
+                      aria-controls={`sx-panel-${activeRun.id}-${item}`}
+                      aria-selected={mode === item}
+                      className={`sx-mode-tab is-${item}${mode === item ? " is-active" : ""}`}
+                      tabIndex={mode === item ? 0 : -1}
+                      onKeyDown={(event) => {
+                        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+                        event.preventDefault();
+                        const current = MODES.indexOf(item);
+                        const next = event.key === "Home" ? MODES[0] : event.key === "End" ? MODES[2] : MODES[(current + (event.key === "ArrowRight" ? 1 : 2)) % 3];
+                        setMode(next);
+                        document.getElementById(`sx-tab-${activeRun.id}-${next}`)?.focus();
+                      }}
+                      onClick={() => {
+                        setMode(item);
+                        if (lastCompletedMode === item) setLastCompletedMode(null);
+                      }}
+                    >
+                      <span className="sx-tab-title">{item === "quick" ? "Quick Overview" : item === "deep" ? "Deep Analysis" : "Counter Perspective"}</span>
+                      <span className={`sx-tab-state is-${hasResult ? "complete" : isTabRunning ? "running" : state}`}>
+                        {hasResult ? "Ready" : isTabRunning ? "Running" : state === "queued" ? "Queued" : state === "error" ? "Failed" : "Not run"}
+                      </span>
+                    </button>
+                  );
                 })}
               </div>
 
-              {loadingMode && (
-                <div className="sx-loading sx-loading-inline" role="status" aria-live="polite">
+              {loadingMode && mode !== loadingMode && (
+                <div className="sx-background-task-banner" role="status" aria-live="polite">
                   <span className="sx-loading-dot" />
-                  <span className="sx-loading-text">
-                    Generating {loadingMode} analysis{queueProgress && queueProgress.total > 1 ? ` (${queueProgress.current} of ${queueProgress.total})` : ""}...
+                  <span className="sx-banner-text">
+                    Generating <strong>{loadingMode === "deep" ? "Deep" : loadingMode === "counter" ? "Counter" : "Quick"}</strong> analysis in background{queueProgress && queueProgress.total > 1 ? ` (${queueProgress.current} of ${queueProgress.total})` : ""}... ({elapsed}s)
                   </span>
-                  <span className="sx-loading-time">{elapsed}s</span>
-                  {mode !== loadingMode && (
-                    <button
-                      type="button"
-                      className="sx-tab-switch-btn"
-                      onClick={() => setMode(loadingMode)}
-                    >
-                      View {loadingMode} tab
-                    </button>
-                  )}
-                  <button type="button" className="sx-inline-stop-btn" onClick={stopAnalysis}>
-                    <Icon name="icon-close" size={12} />
-                    <span>Stop</span>
+                  <button
+                    type="button"
+                    className="sx-tab-switch-btn"
+                    onClick={() => setMode(loadingMode)}
+                  >
+                    View {loadingMode} tab
                   </button>
                 </div>
               )}
@@ -398,21 +428,37 @@ export default function Page() {
                     onEvidenceSelect={setHighlightedQuote}
                   />
                 ) : loadingMode === mode ? (
-                  <div className="sx-mode-empty">
-                    <span className="sx-loading-dot" />
-                    <span>Generating {mode} analysis now...</span>
+                  <div className="sx-loading-hero-card" role="status" aria-live="polite">
+                    <div className="sx-loading-pulse-ring">
+                      <span className="sx-loading-spinner" />
+                    </div>
+                    <div className="sx-loading-hero-info">
+                      <h4>Generating {mode === "deep" ? "Deep Analysis" : mode === "counter" ? "Counter Perspective" : "Quick Overview"}…</h4>
+                      <p>Local Gemma 4 is evaluating claims, logical consistency, and evidentiary basis ({elapsed}s elapsed).</p>
+                      <div className="sx-loading-hero-meta">
+                        <span className="sx-loading-badge">Local Inference</span>
+                        <span>Ollama gemma4:e2b</span>
+                      </div>
+                    </div>
                   </div>
                 ) : !error ? (
                   <div className="sx-mode-empty">
-                    <span>
+                    <div className="sx-mode-empty-top">
+                      <span className="sx-mode-empty-icon">
+                        <Icon name={mode === "deep" ? "icon-depth" : mode === "counter" ? "icon-branch" : "icon-bolt"} size={20} />
+                      </span>
+                      <strong>{mode === "quick" ? "Quick Overview" : mode === "deep" ? "Deep Analysis" : "Counter Perspective"} has not been generated yet.</strong>
+                    </div>
+                    <p className="sx-mode-empty-desc">
                       {mode === "quick"
-                        ? "A quick read, when you want it."
+                        ? "Extract the core claims and essential caveats in seconds."
                         : mode === "deep"
-                        ? "A closer examination, when you ask for it."
-                        : "The strongest fair challenge, when you need it."}
-                    </span>
-                    <button className="sx-inline-action" onClick={() => generateSingleMode(mode)}>
-                      Generate {mode} <Icon name="icon-arrow-right" size={14} />
+                        ? "Deep forensic audit of logical structure, supporting evidence, and rhetorical tactics."
+                        : "Steelmanned alternative interpretation and what evidence would resolve the claim."}
+                    </p>
+                    <button type="button" className="sx-btn sx-btn-sm" onClick={() => generateSingleMode(mode)}>
+                      <Icon name="icon-search-plus" size={13} />
+                      <span>Generate {mode === "deep" ? "Deep" : mode === "counter" ? "Counter" : "Quick"}</span>
                     </button>
                   </div>
                 ) : null}

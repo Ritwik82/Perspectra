@@ -177,7 +177,7 @@ export function InputPanel({
             type="button"
             role="checkbox"
             aria-checked={selectedModes.includes("quick")}
-            className={`sx-mode-card${selectedModes.includes("quick") ? " is-selected" : ""}`}
+            className={`sx-mode-card is-quick${selectedModes.includes("quick") ? " is-selected" : ""}`}
             onClick={() => onToggleMode("quick")}
           >
             <div className="sx-mode-card-top">
@@ -194,7 +194,7 @@ export function InputPanel({
             type="button"
             role="checkbox"
             aria-checked={selectedModes.includes("deep")}
-            className={`sx-mode-card${selectedModes.includes("deep") ? " is-selected" : ""}`}
+            className={`sx-mode-card is-deep${selectedModes.includes("deep") ? " is-selected" : ""}`}
             onClick={() => onToggleMode("deep")}
           >
             <div className="sx-mode-card-top">
@@ -211,7 +211,7 @@ export function InputPanel({
             type="button"
             role="checkbox"
             aria-checked={selectedModes.includes("counter")}
-            className={`sx-mode-card${selectedModes.includes("counter") ? " is-selected" : ""}`}
+            className={`sx-mode-card is-counter${selectedModes.includes("counter") ? " is-selected" : ""}`}
             onClick={() => onToggleMode("counter")}
           >
             <div className="sx-mode-card-top">
@@ -255,7 +255,7 @@ export function InputPanel({
               <span>New</span>
             </button>
           )}
-          {loading && onStop && (
+          {loading && onStop ? (
             <button
               type="button"
               className="sx-btn sx-btn-stop"
@@ -265,11 +265,12 @@ export function InputPanel({
               <Icon name="icon-close" size={14} />
               <span>Stop Analysing</span>
             </button>
+          ) : (
+            <button type="button" className="sx-btn" onClick={onSubmit} disabled={!ready || loading}>
+              <Icon name="icon-search-plus" />
+              <span>{getButtonLabel()}</span>
+            </button>
           )}
-          <button type="button" className="sx-btn" onClick={onSubmit} disabled={!ready || loading}>
-            <Icon name="icon-search-plus" />
-            <span>{getButtonLabel()}</span>
-          </button>
         </div>
       </div>
 
