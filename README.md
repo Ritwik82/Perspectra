@@ -148,30 +148,4 @@ Tested across multiple runs on target laptop hardware (NVIDIA RTX 2050, 4 GB VRA
 2. **Real-Time Fact-Checking:** Perspectra evaluates internal argument consistency, evidential structure, and rhetorical framing. It does not browse the live internet to verify breaking news facts.
 3. **Hardware Latency:** On low-power 4 GB VRAM GPUs, vision-based full OCR inference takes 60–80 seconds. Warmed-up runs typically complete faster.
 
----
 
-## 6. Graphify Codebase Graph
-
-In accordance with Hack Day requirements, the codebase graph was extracted and verified using Graphify:
-
-* **Interactive Graph:** [`graphify-out/graph.html`](graphify-out/graph.html)
-* **Codebase Nodes:** 160 nodes | **Edges:** 260 edges | **Communities:** 9 functional modules
-* **Shared to Discord:** Yes (shared in the official Graphify Discord channel)
-
-To re-generate the graph:
-```bash
-graphify extract . --code-only
-graphify cluster-only . --no-label
-graphify export html
-```
-
----
-
-## 7. Submission Checklist & Track Compliance
-
-- [x] **Public GitHub Repo:** Published under Apache-2.0 open-source licence.
-- [x] **No Hosted Generative APIs:** 100% powered by local Ollama `gemma4:e2b`.
-- [x] **Graphify Graph Shared:** `graphify-out/graph.html` generated and shared in Discord.
-- [x] **Working Narrow Tool:** Accepts text & images, outputs structured claims, quotes, steelman, and verdicts.
-- [x] **Guardrail Implemented:** Neutral inputs correctly produce `noSignal` instead of fabricated fallacies.
-- [x] **Zero Secrets Committed:** Pure `.env.example` with zero API keys or sensitive data.

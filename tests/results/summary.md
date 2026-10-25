@@ -1,4 +1,4 @@
-# Subtext quick test run summary
+# Perspectra quick test run summary
 
 model `gemma4:e2b` · num_ctx `16384` · temperature `0.2`
 

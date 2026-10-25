@@ -1,6 +1,6 @@
 # Test corpus
 
-Seven real posts, used to check that Subtext does what it claims and to produce
+Seven real posts, used to check that Perspectra does what it claims and to produce
 the repeated-run evidence in the main README.
 
 Nothing here is synthetic. Every text post was written by a person on a real

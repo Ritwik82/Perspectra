@@ -11,7 +11,7 @@ export const metadata: Metadata = {
  * Applies the saved theme before first paint so there is no flash of the wrong
  * palette. Dark is the default — the demo runs on a projector.
  */
-const themeScript = `try{var t=localStorage.getItem('subtext-theme');document.documentElement.dataset.theme=t==='light'?'light':'dark';}catch(e){document.documentElement.dataset.theme='dark';}`;
+const themeScript = `try{var t=localStorage.getItem('perspectra-theme');document.documentElement.dataset.theme=t==='light'?'light':'dark';}catch(e){document.documentElement.dataset.theme='dark';}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

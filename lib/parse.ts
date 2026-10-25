@@ -124,7 +124,7 @@ export function parseAnalysis(
       responseLanguage: "Unknown",
       contentType: "",
       headline: "Analysis format could not be read",
-      summary: "The model responded, but Subtext could not safely interpret the structured result. The raw response is available for inspection.",
+      summary: "The model responded, but Perspectra could not safely interpret the structured result. The raw response is available for inspection.",
     sections: [],
       tactics: [],
       counterArguments: [],
@@ -189,7 +189,7 @@ export function parseAnalysis(
 
 export function toMarkdown(result: AnalyzeResult): string {
   const lines = [
-    `# ${result.headline || "Subtext analysis"}`,
+    `# ${result.headline || "Perspectra analysis"}`,
     "",
     `**Mode:** ${result.mode} · **Source language:** ${result.sourceLanguage} · **Response language:** ${result.responseLanguage}`,
     `**Model:** ${result.meta.model} · ${(result.meta.wallMs / 1000).toFixed(1)}s · ${result.meta.tokPerS} tok/s`,

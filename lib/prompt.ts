@@ -5,7 +5,7 @@ import { modeInstructions } from "./analysis-schema";
 /**
  * The system message is two files, concatenated in this order:
  *
- *   prompt/subtext_system.md  the Subtext evidence-first rules
+ *   prompt/perspectra_system.md  the Perspectra evidence-first rules
  *   prompt/overrides/*.md     the selected mode's output contract
  *
  * Why the override exists: the rule set as written asks for a 14-section
@@ -25,7 +25,7 @@ import { modeInstructions } from "./analysis-schema";
  */
 
 const PROMPT_DIR = path.join(process.cwd(), "prompt");
-const BASE_PATH = path.join(PROMPT_DIR, "subtext_system.md");
+const BASE_PATH = path.join(PROMPT_DIR, "perspectra_system.md");
 let cached: string | undefined;
 
 function readOrThrow(file: string, what: string): string {
@@ -40,7 +40,7 @@ function readOrThrow(file: string, what: string): string {
 }
 
 /**
- * The full system message: Subtext's rules followed by one mode override.
+ * The full system message: Perspectra's rules followed by one mode override.
  * Read once per process. The files are the product — do not overwrite them.
  */
 export function getSystemPrompt(mode: "quick" | "deep" | "counter" = "quick"): string {
@@ -48,7 +48,7 @@ export function getSystemPrompt(mode: "quick" | "deep" | "counter" = "quick"): s
   // Turbopack does not watch .md, so a cache here means a stale prompt until the
   // server is restarted. In production the cache is kept.
   if (cached === undefined || process.env.NODE_ENV !== "production") {
-    const base = readOrThrow(BASE_PATH, "Subtext evidence-first system prompt");
+    const base = readOrThrow(BASE_PATH, "Perspectra evidence-first system prompt");
     if (base.trim().length < 1000) {
       throw new Error(
         `System prompt at ${BASE_PATH} looks truncated (${base.length} chars). ` +

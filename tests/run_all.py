@@ -2,7 +2,7 @@
 """
 Run every post in tests/ through the shipped system prompt and dump the raw output.
 
-The system prompt is prompt/subtext_system.md followed by the chosen mode override,
+The system prompt is prompt/perspectra_system.md followed by the chosen mode override,
 concatenated exactly as lib/prompt.ts does it.
 
 No grading, no expected.md comparison. Just: does the model produce a complete
@@ -49,7 +49,7 @@ RESULTS_DIR = TESTS_DIR / "results"
 # The system message is two files, concatenated exactly as lib/prompt.ts does it.
 # If you change the separator or the order here, change it there too.
 PROMPT_DIR = APP_DIR / "prompt"
-DEFAULT_PROMPT = PROMPT_DIR / "subtext_system.md"
+DEFAULT_PROMPT = PROMPT_DIR / "perspectra_system.md"
 PROMPT_SEPARATOR = "\n\n---\n\n"
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
@@ -237,7 +237,7 @@ def print_row(r: dict) -> None:
 def write_summary(rows: list[dict]) -> Path:
     RESULTS_DIR.mkdir(exist_ok=True)
     lines = [
-        f"# Subtext {MODE} test run summary",
+        f"# Perspectra {MODE} test run summary",
         "",
         f"model `{MODEL}` · num_ctx `{NUM_CTX}` · temperature `{TEMPERATURE}`",
         "",

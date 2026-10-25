@@ -16,7 +16,7 @@ export function ThemeToggle() {
     setTheme(next);
     document.documentElement.dataset.theme = next;
     try {
-      localStorage.setItem("subtext-theme", next);
+      localStorage.setItem("perspectra-theme", next);
     } catch {
       /* storage blocked — the toggle still works for this session */
     }

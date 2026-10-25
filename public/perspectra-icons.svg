@@ -4,12 +4,12 @@
      style="position:absolute;pointer-events:none;overflow:hidden"
      aria-hidden="true">
   <!--
-    Subtext Icon Sprite
+    Perspectra Icon Sprite
     Usage in Next.js:
-      import SubtextIcons from "@/public/subtext-icons.svg";
+      import PerspectraIcons from "@/public/perspectra-icons.svg";
       ...
       <svg aria-hidden="true" focusable="false" width="16" height="16">
-        <use href="/subtext-icons.svg#icon-search" />
+        <use href="/perspectra-icons.svg#icon-search" />
       </svg>
 
     All icons are drawn on a 16×16 grid.
@@ -19,8 +19,8 @@
     on each symbol to keep inheriting clean.
 
     Symbol index:
-      #icon-logo-search    Subtext logo mark (input screen) — magnifier + search bar
-      #icon-logo-bars      Subtext logo mark (results screen) — two staggered bars
+      #icon-logo-search    Perspectra logo mark (input screen) — magnifier + search bar
+      #icon-logo-bars      Perspectra logo mark (results screen) — two staggered bars
       #icon-search         Standalone magnifier (analyse button)
       #icon-search-plus    Magnifier with plus crosshair (analyse CTA)
       #icon-sun            Sun — 8 rays
@@ -52,7 +52,7 @@
   <!--
     icon-logo-bars
     Used on the Results screen header.
-    Two staggered horizontal bars suggesting subtext layers.
+    Two staggered horizontal bars suggesting Perspectra perspective layers.
   -->
   <symbol id="icon-logo-bars" viewBox="0 0 16 16">
     <line x1="3"  y1="5.5"  x2="13" y2="5.5"/>

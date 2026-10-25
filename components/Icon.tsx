@@ -21,7 +21,7 @@ export function Icon({
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <use href={`/subtext-icons.svg#${name}`} />
+      <use href={`/perspectra-icons.svg#${name}`} />
     </svg>
   );
 }

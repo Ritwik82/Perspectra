@@ -1,5 +1,5 @@
 /* ============================================================
-   Subtext — Design Token Contract
+   Perspectra — Design Token Contract
    Paste into Next.js app/globals.css (or src/styles/globals.css).
    Every var(--sx-*) maps to a Tailwind v4 theme key below.
    ============================================================ */
@@ -280,7 +280,7 @@ body, textarea { caret-color: var(--sx-primary); }
 }
 
 /* ============================================================
-   Subtext — application layer
+   Perspectra — application layer
    Tokens above are the contract. Nothing here hard-codes a
    colour; every value comes from a --sx-* variable.
    ============================================================ */
