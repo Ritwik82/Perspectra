@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description:
     "Before you believe it, take a closer look. Examine claims, reasoning, and counter-perspectives with Perspectra. Runs locally on this machine.",
   icons: {
-    icon: "/icon.jpeg",
-    apple: "/icon.jpeg",
+    icon: "/icon.png",
+    apple: "/icon.png",
   },
 };
 

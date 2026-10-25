@@ -188,7 +188,7 @@ export default function Page() {
       <header className="sx-head">
         <div className="sx-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon.jpeg" alt="Perspectra" className="sx-logo-img" />
+          <img src="/icon.png" alt="Perspectra" className="sx-logo-img" />
           <span className="sx-wordmark">Perspectra</span>
           <span className="sx-tagline">think clearly. see the whole picture.</span>
         </div>
