@@ -1,0 +1,14 @@
+{
+  "file": "05_img_hi.jpeg",
+  "num_ctx": 16384,
+  "wall_s": 65.5,
+  "prompt_tokens": 6467,
+  "out_tokens": 2558,
+  "tok_per_s": 39.8,
+  "done_reason": "stop",
+  "retried": false,
+  "sections_present": 14,
+  "verdict": "(none found)",
+  "score": "6",
+  "chars": 8230
+}

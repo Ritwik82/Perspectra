@@ -1,0 +1,14 @@
+{
+  "file": "06_neutral_eng.txt",
+  "num_ctx": 16384,
+  "wall_s": 77.6,
+  "prompt_tokens": 6379,
+  "out_tokens": 3079,
+  "tok_per_s": 39.9,
+  "done_reason": "stop",
+  "retried": false,
+  "sections_present": 14,
+  "verdict": "Reasonable but limited",
+  "score": "8.5",
+  "chars": 10061
+}

@@ -1,0 +1,14 @@
+{
+  "file": "03_text_hinglish.txt",
+  "num_ctx": 16384,
+  "wall_s": 71.2,
+  "prompt_tokens": 6403,
+  "out_tokens": 2661,
+  "tok_per_s": 37.8,
+  "done_reason": "stop",
+  "retried": false,
+  "sections_present": 14,
+  "verdict": "Reasonable but limited",
+  "score": "7.5",
+  "chars": 8738
+}

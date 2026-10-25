@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="0" height="0"
+     style="position:absolute;pointer-events:none;overflow:hidden"
+     aria-hidden="true">
+  <!--
+    Subtext Icon Sprite
+    Usage in Next.js:
+      import SubtextIcons from "@/public/subtext-icons.svg";
+      ...
+      <svg aria-hidden="true" focusable="false" width="16" height="16">
+        <use href="/subtext-icons.svg#icon-search" />
+      </svg>
+
+    All icons are drawn on a 16×16 grid.
+    stroke="currentColor" fill="none" — colorized via CSS.
+    Stroke props: stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+    Set these on the consuming <svg> or via a CSS class; they are NOT repeated
+    on each symbol to keep inheriting clean.
+
+    Symbol index:
+      #icon-logo-search    Subtext logo mark (input screen) — magnifier + search bar
+      #icon-logo-bars      Subtext logo mark (results screen) — two staggered bars
+      #icon-search         Standalone magnifier (analyse button)
+      #icon-search-plus    Magnifier with plus crosshair (analyse CTA)
+      #icon-sun            Sun — 8 rays
+      #icon-moon           Crescent moon
+      #icon-settings       Gear — inner circle + 8-spoke path
+      #icon-image          Photo frame — rect + mountain + circle
+      #icon-info           Info circle — i shape
+      #icon-download       Export/download — arrow-down + shelf
+      #icon-plus           Plus / add — two crossed lines
+      #icon-close          Close / remove — X
+      #icon-check          Checkmark
+      #icon-arrow-right    Chevron / arrow right
+      #icon-dash           Em-dash / no-signal marker
+  -->
+
+  <!-- ─── Logo marks ─────────────────────────────────────────────────────── -->
+
+  <!--
+    icon-logo-search
+    Used on the Input screen header.
+    Circle (search lens) + horizontal search bar + diagonal handle.
+  -->
+  <symbol id="icon-logo-search" viewBox="0 0 16 16">
+    <circle cx="7" cy="7" r="4.5"/>
+    <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+    <line x1="5"    y1="7"    x2="9"  y2="7"/>
+  </symbol>
+
+  <!--
+    icon-logo-bars
+    Used on the Results screen header.
+    Two staggered horizontal bars suggesting subtext layers.
+  -->
+  <symbol id="icon-logo-bars" viewBox="0 0 16 16">
+    <line x1="3"  y1="5.5"  x2="13" y2="5.5"/>
+    <line x1="3"  y1="10.5" x2="9"  y2="10.5"/>
+  </symbol>
+
+  <!-- ─── Action icons ────────────────────────────────────────────────────── -->
+
+  <!--
+    icon-search
+    Generic standalone magnifier — use for search inputs, empty states.
+  -->
+  <symbol id="icon-search" viewBox="0 0 16 16">
+    <circle cx="7" cy="7" r="4.5"/>
+    <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+  </symbol>
+
+  <!--
+    icon-search-plus
+    Analyse button icon — magnifier with a + crosshair inside the lens.
+    Signals "examine / look deeper" rather than "find".
+  -->
+  <symbol id="icon-search-plus" viewBox="0 0 16 16">
+    <circle cx="7" cy="7" r="4.5"/>
+    <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+    <line x1="5"    y1="7"    x2="9"  y2="7"/>
+    <line x1="7"    y1="5"    x2="7"  y2="9"/>
+  </symbol>
+
+  <!--
+    icon-sun
+    Theme toggle — visible in dark mode, switches to light.
+    Circle core + 8 ray lines.
+  -->
+  <symbol id="icon-sun" viewBox="0 0 16 16">
+    <circle cx="8" cy="8" r="3"/>
+    <line x1="8"     y1="1"     x2="8"     y2="3"/>
+    <line x1="8"     y1="13"    x2="8"     y2="15"/>
+    <line x1="1"     y1="8"     x2="3"     y2="8"/>
+    <line x1="13"    y1="8"     x2="15"    y2="8"/>
+    <line x1="3.05"  y1="3.05"  x2="4.46"  y2="4.46"/>
+    <line x1="11.54" y1="11.54" x2="12.95" y2="12.95"/>
+    <line x1="12.95" y1="3.05"  x2="11.54" y2="4.46"/>
+    <line x1="4.46"  y1="11.54" x2="3.05"  y2="12.95"/>
+  </symbol>
+
+  <!--
+    icon-moon
+    Theme toggle — visible in light mode, switches to dark.
+  -->
+  <symbol id="icon-moon" viewBox="0 0 16 16">
+    <path d="M13.5 10A5.5 5.5 0 0 1 6 2.5a5.5 5.5 0 1 0 7.5 7.5Z"/>
+  </symbol>
+
+  <!--
+    icon-settings
+    Settings / gear icon.
+    Inner circle + compound path for 8 spokes via M/l shorthand.
+  -->
+  <symbol id="icon-settings" viewBox="0 0 16 16">
+    <circle cx="8" cy="8" r="2"/>
+    <path d="M8 1v2
+             M8 13v2
+             M1 8h2
+             M13 8h2
+             M3.05 3.05l1.42 1.42
+             M11.54 11.54l1.41 1.41
+             M12.95 3.05l-1.41 1.42
+             M4.46 11.54l-1.41 1.41"/>
+  </symbol>
+
+  <!--
+    icon-image
+    Photo / screenshot upload button.
+    Outer rectangle + mountain silhouette path + sun circle.
+  -->
+  <symbol id="icon-image" viewBox="0 0 16 16">
+    <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+    <circle cx="5.5" cy="7" r="1.5"/>
+    <path d="M1 11l4-4 3 3 2.5-2.5L15 11"/>
+  </symbol>
+
+  <!--
+    icon-info
+    Info badge inside "What would settle it" settle items.
+    Circle with vertical I-bar.
+  -->
+  <symbol id="icon-info" viewBox="0 0 16 16">
+    <circle cx="8" cy="8" r="6"/>
+    <line x1="8" y1="5"    x2="8" y2="8.5"/>
+    <line x1="8" y1="10.5" x2="8" y2="11"/>
+  </symbol>
+
+  <!--
+    icon-download
+    Export report button.
+    Downward arrow + horizontal shelf/underline.
+  -->
+  <symbol id="icon-download" viewBox="0 0 14 14">
+    <path d="M7 1v8M4 6l3 3 3-3"/>
+    <path d="M1.5 10v1a1.5 1.5 0 0 0 1.5 1.5h8A1.5 1.5 0 0 0 12.5 11v-1"/>
+  </symbol>
+
+  <!--
+    icon-plus
+    New Analysis button / add action.
+    Two perpendicular lines.
+  -->
+  <symbol id="icon-plus" viewBox="0 0 14 14">
+    <line x1="7" y1="1"  x2="7" y2="13"/>
+    <line x1="1" y1="7"  x2="13" y2="7"/>
+  </symbol>
+
+  <!--
+    icon-close
+    Remove attachment / dismiss.
+    X — two diagonal lines.
+  -->
+  <symbol id="icon-close" viewBox="0 0 16 16">
+    <path d="M4 4l8 8M12 4l-8 8"/>
+  </symbol>
+
+  <!--
+    icon-check
+    Success state, confirmation, steelmanned verdict dot support.
+  -->
+  <symbol id="icon-check" viewBox="0 0 16 16">
+    <path d="M3 8l3.5 3.5L13 5"/>
+  </symbol>
+
+  <!--
+    icon-arrow-right
+    Link / navigation affordance — "Privacy note →"
+  -->
+  <symbol id="icon-arrow-right" viewBox="0 0 16 16">
+    <path d="M3 8h10M9 4l4 4-4 4"/>
+  </symbol>
+
+  <!--
+    icon-dash
+    No Signal marker in card 02 of the No Signal screen.
+    Em-dash centred on the grid.
+  -->
+  <symbol id="icon-dash" viewBox="0 0 16 16">
+    <line x1="4" y1="8" x2="12" y2="8"/>
+  </symbol>
+
+  <symbol id="icon-bolt" viewBox="0 0 16 16">
+    <path d="M9.5 1.5 3.8 8.4h3.9l-1.1 6.1 5.6-7h-3.8l1.1-6Z"/>
+  </symbol>
+
+  <symbol id="icon-depth" viewBox="0 0 16 16">
+    <circle cx="8" cy="3.2" r="1.6"/><circle cx="4" cy="12.4" r="1.6"/><circle cx="12" cy="12.4" r="1.6"/>
+    <path d="M7.3 4.7 4.7 10.8m4-6.1 2.6 6.1M5.7 12.4h4.6"/>
+  </symbol>
+
+  <symbol id="icon-branch" viewBox="0 0 16 16">
+    <circle cx="3" cy="3" r="1.5"/><circle cx="13" cy="4" r="1.5"/><circle cx="13" cy="13" r="1.5"/>
+    <path d="M4.5 3h2a3 3 0 0 1 3 3v4a3 3 0 0 0 3 3M4.5 3v10"/>
+  </symbol>
+
+  <symbol id="icon-people" viewBox="0 0 24 24">
+    <path d="M16 20v-1.7a3.3 3.3 0 0 0-3.3-3.3H7.3A3.3 3.3 0 0 0 4 18.3V20m14 0v-1.7a3.3 3.3 0 0 0-2.5-3.2M14 4.2a3.4 3.4 0 0 1 0 6.6M10 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+  </symbol>
+
+</svg>

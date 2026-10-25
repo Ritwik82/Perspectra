@@ -1,0 +1,15 @@
+{
+  "file": "01_text_en.txt",
+  "num_ctx": 16384,
+  "wall_s": 87.3,
+  "prompt_tokens": 3157,
+  "out_tokens": 892,
+  "tok_per_s": 23.6,
+  "done_reason": "stop",
+  "retried": false,
+  "sections_present": 2,
+  "verdict": "The argument presents a nuanced and reasonable critique of using the raw gender pay gap as definitive proof of discrimination, advocating instead for more granular data and transparency measures.",
+  "score": null,
+  "no_signal": false,
+  "chars": 4257
+}

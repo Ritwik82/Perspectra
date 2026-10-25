@@ -1,0 +1,14 @@
+{
+  "file": "06_neutral_hi.txt",
+  "num_ctx": 16384,
+  "wall_s": 80.5,
+  "prompt_tokens": 6387,
+  "out_tokens": 3132,
+  "tok_per_s": 39.1,
+  "done_reason": "stop",
+  "retried": false,
+  "sections_present": 14,
+  "verdict": "Reasonable but limited",
+  "score": "8",
+  "chars": 8800
+}

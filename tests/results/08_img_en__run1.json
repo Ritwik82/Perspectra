@@ -1,0 +1,14 @@
+{
+  "file": "08_img_en.jpeg",
+  "num_ctx": 16384,
+  "wall_s": 67.1,
+  "prompt_tokens": 6467,
+  "out_tokens": 2797,
+  "tok_per_s": 42.4,
+  "done_reason": "stop",
+  "retried": false,
+  "sections_present": 14,
+  "verdict": "Reasonable but limited",
+  "score": "1.5",
+  "chars": 9791
+}
