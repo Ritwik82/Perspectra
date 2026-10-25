@@ -326,13 +326,16 @@ body, textarea { caret-color: var(--sx-primary); }
 }
 
 .sx-logo-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  object-fit: cover;
+  height: 36px;
+  width: auto;
+  max-width: 56px;
+  object-fit: contain;
   flex: none;
-  border: 1px solid var(--sx-border-strong);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  display: block;
 }
 
 .sx-logo {
