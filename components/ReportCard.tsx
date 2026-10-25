@@ -28,6 +28,38 @@ function download(markdown: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+function FormattedText({ text, className }: { text: string; className?: string }) {
+  if (!text) return null;
+  const paragraphs = text.split(/\n\n+/);
+  return (
+    <div className={className}>
+      {paragraphs.map((p, pIdx) => {
+        const parts = p.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
+        return (
+          <p key={pIdx} style={{ margin: pIdx > 0 ? "0.6em 0 0" : 0 }}>
+            {parts.map((part, i) => {
+              if (part.startsWith("**") && part.endsWith("**")) {
+                return <strong key={i}>{part.slice(2, -2)}</strong>;
+              }
+              if (part.startsWith("*") && part.endsWith("*")) {
+                return <em key={i}>{part.slice(1, -1)}</em>;
+              }
+              if (part.startsWith("`") && part.endsWith("`")) {
+                return (
+                  <code key={i} className="sx-code-inline">
+                    {part.slice(1, -1)}
+                  </code>
+                );
+              }
+              return part;
+            })}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 export function ReportCard({
   result,
   sourceText = "",
@@ -40,6 +72,20 @@ export function ReportCard({
   const seconds = (result.meta.wallMs / 1000).toFixed(1);
   const score = result.score;
   const scoreApplicable = score !== null;
+
+  // Single author detection: drop speaker label unless multi-author
+  const uniqueSpeakers = Array.from(
+    new Set(
+      result.sections
+        .flatMap((s) => s.evidence)
+        .map((e) => e.speaker?.trim())
+        .filter(
+          (s): s is string =>
+            !!s && !/^(author|poster|speaker|user|op|original poster)$/i.test(s),
+        ),
+    ),
+  );
+  const isMultiSpeaker = uniqueSpeakers.length > 1;
 
   return (
     <article className="sx-report" aria-live="polite">
@@ -112,20 +158,25 @@ export function ReportCard({
           </div>
         </div>
 
-        {result.summary && <p className="sx-report-summary">{result.summary}</p>}
+        {result.summary && (
+          <FormattedText text={result.summary} className="sx-report-summary" />
+        )}
 
         {result.sections.map((section, index) => (
           <section className="sx-block sx-adaptive-section" key={`${section.heading}-${index}`}>
             <h3 className="sx-label">{section.heading}</h3>
-            {section.body && <p className="sx-adaptive-body">{section.body}</p>}
+            {section.body && (
+              <FormattedText text={section.body} className="sx-adaptive-body" />
+            )}
             {section.evidence.length > 0 && (
               <ul className="sx-evidence-list">
                 {section.evidence.map((evidence, i) => (
                   <li key={`${evidence.quote}-${i}`}>
                     <blockquote>&ldquo;{evidence.quote}&rdquo;</blockquote>
-                    {(evidence.speaker || evidence.note) && (
+                    {((isMultiSpeaker && evidence.speaker) || evidence.note) && (
                       <p>
-                        {evidence.speaker && <b>{evidence.speaker}</b>} {evidence.note}
+                        {isMultiSpeaker && evidence.speaker && <b>{evidence.speaker}: </b>}
+                        {evidence.note}
                       </p>
                     )}
                     {sourceText && evidence.quote && (

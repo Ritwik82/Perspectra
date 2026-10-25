@@ -118,7 +118,7 @@ function parseModelResponse(raw: string, mode: AnalysisMode): ModelAnalysis {
         })
       : [];
     const heading = sanitizeHeading(section.heading, "Key observation");
-    const body = cleanString(section.body, 2400);
+    const body = cleanString(section.body, 5000);
     return heading || body || evidence.length ? [{ heading, body, evidence }] : [];
   });
 
@@ -126,8 +126,8 @@ function parseModelResponse(raw: string, mode: AnalysisMode): ModelAnalysis {
     ? x.openQuestions.slice(0, 5).flatMap((item): OpenQuestion[] => {
         if (!item || typeof item !== "object") return [];
         const q = item as Record<string, unknown>;
-        const question = cleanString(q.question, 400);
-        const evidenceNeeded = cleanString(q.evidenceNeeded, 600);
+        const question = cleanString(q.question, 500);
+        const evidenceNeeded = cleanString(q.evidenceNeeded, 1000);
         return question ? [{ question, evidenceNeeded }] : [];
       })
     : [];
@@ -171,8 +171,8 @@ function parseModelResponse(raw: string, mode: AnalysisMode): ModelAnalysis {
     responseLanguage: cleanString(x.responseLanguage, 100) || "Unknown",
     contentType: cleanString(x.contentType, 160),
     headline: sanitizeHeading(x.headline, "Perspectra analysis"),
-    summary: cleanString(x.summary, 1000)
-      .replace(/^This is an argument,?\s*(not a (vent|question)[.!:]?\s*)/i, "")
+    summary: cleanString(x.summary, 4000)
+      .replace(/^This is an? argument,?\s*(not a (vent|question)[.!:]?\s*)/i, "")
       .trim(),
     sections,
     openQuestions,
