@@ -31,14 +31,18 @@ export default function Page() {
   const [imageName, setImageName] = useState<string | null>(null);
   const [focus, setFocus] = useState("");
   const [outputLanguage, setOutputLanguage] = useState("");
+  const [selectedModes, setSelectedModes] = useState<AnalysisMode[]>(["quick"]);
   const [mode, setMode] = useState<AnalysisMode>("quick");
   const [runs, setRuns] = useState<AnalysisRun[]>([]);
   const [activeRunId, setActiveRunId] = useState<string | null>(null);
   const [loadingMode, setLoadingMode] = useState<AnalysisMode | null>(null);
+  const [queueProgress, setQueueProgress] = useState<{ current: number; total: number; mode: AnalysisMode } | null>(null);
+  const [lastCompletedMode, setLastCompletedMode] = useState<AnalysisMode | null>(null);
   const [elapsed, setElapsed] = useState(0);
   const [highlightedQuote, setHighlightedQuote] = useState("");
   const [error, setError] = useState<AnalyzeError | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const cancelQueueRef = useRef(false);
 
   const currentFingerprint = useMemo(
     () => fingerprint([text.trim(), imageName ?? "", image ?? "", focus.trim(), outputLanguage.trim()]),
@@ -85,12 +89,24 @@ export default function Page() {
     return run;
   }
 
+  function toggleMode(target: AnalysisMode) {
+    setSelectedModes((prev) => {
+      if (prev.includes(target)) {
+        if (prev.length <= 1) return prev;
+        return prev.filter((m) => m !== target);
+      }
+      return MODES.filter((m) => prev.includes(m) || m === target);
+    });
+  }
+
   function stopAnalysis() {
+    cancelQueueRef.current = true;
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
     setLoadingMode(null);
+    setQueueProgress(null);
   }
 
   async function executeMode(run: AnalysisRun, requestedMode: AnalysisMode): Promise<boolean> {
@@ -145,12 +161,41 @@ export default function Page() {
   }
 
   async function generateSelected() {
-    if ((!text.trim() && !image) || loadingMode) return;
+    if ((!text.trim() && !image) || loadingMode || selectedModes.length === 0) return;
+    cancelQueueRef.current = false;
+    setLastCompletedMode(null);
     const run = activeRun && !isStale ? activeRun : createRun();
-    await executeMode(run, mode);
+
+    const modesToRun = [...selectedModes];
+    // If the currently viewed tab has no results yet, point it to the first mode to run
+    if (!run.results[mode]) {
+      setMode(modesToRun[0]);
+    }
+
+    for (let i = 0; i < modesToRun.length; i++) {
+      if (cancelQueueRef.current) break;
+      const targetMode = modesToRun[i];
+      setQueueProgress({ current: i + 1, total: modesToRun.length, mode: targetMode });
+
+      const success = await executeMode(run, targetMode);
+      if (!success || cancelQueueRef.current) {
+        break;
+      }
+      setLastCompletedMode(targetMode);
+    }
+    setQueueProgress(null);
   }
 
-
+  async function generateSingleMode(singleMode: AnalysisMode) {
+    if ((!text.trim() && !image) || loadingMode) return;
+    cancelQueueRef.current = false;
+    setLastCompletedMode(null);
+    const run = activeRun && !isStale ? activeRun : createRun();
+    setMode(singleMode);
+    setQueueProgress({ current: 1, total: 1, mode: singleMode });
+    await executeMode(run, singleMode);
+    setQueueProgress(null);
+  }
 
   function startFresh() {
     setRuns([]);
@@ -161,7 +206,10 @@ export default function Page() {
     setImageName(null);
     setFocus("");
     setOutputLanguage("");
+    setSelectedModes(["quick"]);
     setMode("quick");
+    setQueueProgress(null);
+    setLastCompletedMode(null);
   }
 
   const runIds = runs.map((run) => run.id);
@@ -225,8 +273,10 @@ export default function Page() {
         onReset={startFresh}
         loading={!!loadingMode}
         hasResult={!!activeRun}
-        mode={mode}
-        setMode={setMode}
+        selectedModes={selectedModes}
+        onToggleMode={toggleMode}
+        loadingMode={loadingMode}
+        queueProgress={queueProgress}
         focus={focus}
         setFocus={setFocus}
         outputLanguage={outputLanguage}
@@ -280,9 +330,12 @@ export default function Page() {
                     const next = event.key === "Home" ? MODES[0] : event.key === "End" ? MODES[2] : MODES[(current + (event.key === "ArrowRight" ? 1 : 2)) % 3];
                     setMode(next);
                     document.getElementById(`sx-tab-${activeRun.id}-${next}`)?.focus();
-                  }} onClick={() => setMode(item)}>
+                  }} onClick={() => {
+                    setMode(item);
+                    if (lastCompletedMode === item) setLastCompletedMode(null);
+                  }}>
                     <span>{item === "quick" ? "Quick" : item === "deep" ? "Deep" : "Counter"}</span>
-                    <span className={`sx-tab-state is-${state}`}>{hasResult ? "Ready" : state === "running" ? "Running" : state === "queued" ? "Queued" : state === "error" ? "Failed" : "Not run"}</span>
+                    <span className={`sx-tab-state is-${hasResult ? "complete" : state}`}>{hasResult ? "Ready" : state === "running" ? "Running" : state === "queued" ? "Queued" : state === "error" ? "Failed" : "Not run"}</span>
                   </button>;
                 })}
               </div>
@@ -290,11 +343,40 @@ export default function Page() {
               {loadingMode && (
                 <div className="sx-loading sx-loading-inline" role="status" aria-live="polite">
                   <span className="sx-loading-dot" />
-                  <span className="sx-loading-text">Generating {loadingMode} analysis...</span>
+                  <span className="sx-loading-text">
+                    Generating {loadingMode} analysis{queueProgress && queueProgress.total > 1 ? ` (${queueProgress.current} of ${queueProgress.total})` : ""}...
+                  </span>
                   <span className="sx-loading-time">{elapsed}s</span>
+                  {mode !== loadingMode && (
+                    <button
+                      type="button"
+                      className="sx-tab-switch-btn"
+                      onClick={() => setMode(loadingMode)}
+                    >
+                      View {loadingMode} tab
+                    </button>
+                  )}
                   <button type="button" className="sx-inline-stop-btn" onClick={stopAnalysis}>
                     <Icon name="icon-close" size={12} />
                     <span>Stop</span>
+                  </button>
+                </div>
+              )}
+
+              {lastCompletedMode && lastCompletedMode !== mode && activeRun?.results[lastCompletedMode] && (
+                <div className="sx-ready-banner">
+                  <span>
+                    <Icon name="icon-check" size={14} /> <strong>{lastCompletedMode === "deep" ? "Deep" : lastCompletedMode === "counter" ? "Counter" : "Quick"}</strong> analysis is ready to view.
+                  </span>
+                  <button
+                    type="button"
+                    className="sx-tab-switch-btn"
+                    onClick={() => {
+                      setMode(lastCompletedMode);
+                      setLastCompletedMode(null);
+                    }}
+                  >
+                    Switch to {lastCompletedMode}
                   </button>
                 </div>
               )}
@@ -303,7 +385,7 @@ export default function Page() {
                 <section className="sx-error" role="alert">
                   <p className="sx-error-title">{error.error}</p>
                   {error.detail && <p className="sx-error-detail">{error.detail}</p>}
-                  <button className="sx-ghost-btn" onClick={generateSelected}>Retry {mode}</button>
+                  <button className="sx-ghost-btn" onClick={() => generateSingleMode(mode)}>Retry {mode}</button>
                 </section>
               )}
 
@@ -329,7 +411,7 @@ export default function Page() {
                         ? "A closer examination, when you ask for it."
                         : "The strongest fair challenge, when you need it."}
                     </span>
-                    <button className="sx-inline-action" onClick={generateSelected}>
+                    <button className="sx-inline-action" onClick={() => generateSingleMode(mode)}>
                       Generate {mode} <Icon name="icon-arrow-right" size={14} />
                     </button>
                   </div>

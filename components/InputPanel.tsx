@@ -16,8 +16,10 @@ export interface InputPanelProps {
   onReset: () => void;
   loading: boolean;
   hasResult: boolean;
-  mode: AnalysisMode;
-  setMode: (mode: AnalysisMode) => void;
+  selectedModes: AnalysisMode[];
+  onToggleMode: (mode: AnalysisMode) => void;
+  loadingMode?: AnalysisMode | null;
+  queueProgress?: { current: number; total: number } | null;
   focus: string;
   setFocus: (focus: string) => void;
   outputLanguage: string;
@@ -35,8 +37,10 @@ export function InputPanel({
   onReset,
   loading,
   hasResult,
-  mode,
-  setMode,
+  selectedModes,
+  onToggleMode,
+  loadingMode,
+  queueProgress,
   focus,
   setFocus,
   outputLanguage,
@@ -62,7 +66,27 @@ export function InputPanel({
     reader.readAsDataURL(file);
   }
 
-  const ready = (text.trim().length > 0 || !!image) && !loading;
+  const ready = (text.trim().length > 0 || !!image) && !loading && selectedModes.length > 0;
+
+  function getButtonLabel() {
+    if (loading) {
+      if (queueProgress && queueProgress.total > 1) {
+        return `Analysing ${loadingMode ?? "mode"} (${queueProgress.current} of ${queueProgress.total})…`;
+      }
+      return `Analysing ${loadingMode ?? "mode"}…`;
+    }
+    if (selectedModes.length === 1) {
+      const single = selectedModes[0];
+      return `Generate ${single === "deep" ? "Deep" : single === "counter" ? "Counter" : "Quick"}`;
+    }
+    if (selectedModes.length === 2) {
+      return `Generate 2 Modes (One by one)`;
+    }
+    if (selectedModes.length === 3) {
+      return `Generate All 3 (One by one)`;
+    }
+    return "Select at least 1 mode";
+  }
 
   return (
     <section className="sx-panel" aria-label="Analyze a post">
@@ -145,21 +169,21 @@ export function InputPanel({
         </div>
       </div>
 
-      {/* Selectable Mode Cards with visible Checkmark */}
+      {/* Selectable Mode Cards with visible Checkmarks for Multi-Selection */}
       <fieldset className="sx-mode-fieldset" disabled={loading}>
-        <legend className="sx-mode-legend">Select Analysis Mode</legend>
-        <div className="sx-mode-cards-grid" role="radiogroup" aria-label="Select analysis mode">
+        <legend className="sx-mode-legend">Select Analysis Modes (Select one or more)</legend>
+        <div className="sx-mode-cards-grid" role="group" aria-label="Select analysis modes">
           <button
             type="button"
-            role="radio"
-            aria-checked={mode === "quick"}
-            className={`sx-mode-card${mode === "quick" ? " is-selected" : ""}`}
-            onClick={() => setMode("quick")}
+            role="checkbox"
+            aria-checked={selectedModes.includes("quick")}
+            className={`sx-mode-card${selectedModes.includes("quick") ? " is-selected" : ""}`}
+            onClick={() => onToggleMode("quick")}
           >
             <div className="sx-mode-card-top">
               <span className="sx-mode-card-icon"><Icon name="icon-bolt" size={16} /></span>
-              <span className={`sx-mode-check${mode === "quick" ? " is-checked" : ""}`}>
-                {mode === "quick" ? <Icon name="icon-check" size={11} /> : null}
+              <span className={`sx-mode-check${selectedModes.includes("quick") ? " is-checked" : ""}`}>
+                {selectedModes.includes("quick") ? <Icon name="icon-check" size={11} /> : null}
               </span>
             </div>
             <strong className="sx-mode-card-title">Quick Overview</strong>
@@ -168,15 +192,15 @@ export function InputPanel({
 
           <button
             type="button"
-            role="radio"
-            aria-checked={mode === "deep"}
-            className={`sx-mode-card${mode === "deep" ? " is-selected" : ""}`}
-            onClick={() => setMode("deep")}
+            role="checkbox"
+            aria-checked={selectedModes.includes("deep")}
+            className={`sx-mode-card${selectedModes.includes("deep") ? " is-selected" : ""}`}
+            onClick={() => onToggleMode("deep")}
           >
             <div className="sx-mode-card-top">
               <span className="sx-mode-card-icon"><Icon name="icon-depth" size={16} /></span>
-              <span className={`sx-mode-check${mode === "deep" ? " is-checked" : ""}`}>
-                {mode === "deep" ? <Icon name="icon-check" size={11} /> : null}
+              <span className={`sx-mode-check${selectedModes.includes("deep") ? " is-checked" : ""}`}>
+                {selectedModes.includes("deep") ? <Icon name="icon-check" size={11} /> : null}
               </span>
             </div>
             <strong className="sx-mode-card-title">Deep Analysis</strong>
@@ -185,15 +209,15 @@ export function InputPanel({
 
           <button
             type="button"
-            role="radio"
-            aria-checked={mode === "counter"}
-            className={`sx-mode-card${mode === "counter" ? " is-selected" : ""}`}
-            onClick={() => setMode("counter")}
+            role="checkbox"
+            aria-checked={selectedModes.includes("counter")}
+            className={`sx-mode-card${selectedModes.includes("counter") ? " is-selected" : ""}`}
+            onClick={() => onToggleMode("counter")}
           >
             <div className="sx-mode-card-top">
               <span className="sx-mode-card-icon"><Icon name="icon-branch" size={16} /></span>
-              <span className={`sx-mode-check${mode === "counter" ? " is-checked" : ""}`}>
-                {mode === "counter" ? <Icon name="icon-check" size={11} /> : null}
+              <span className={`sx-mode-check${selectedModes.includes("counter") ? " is-checked" : ""}`}>
+                {selectedModes.includes("counter") ? <Icon name="icon-check" size={11} /> : null}
               </span>
             </div>
             <strong className="sx-mode-card-title">Counter Perspective</strong>
@@ -244,7 +268,7 @@ export function InputPanel({
           )}
           <button type="button" className="sx-btn" onClick={onSubmit} disabled={!ready || loading}>
             <Icon name="icon-search-plus" />
-            <span>{loading ? `Analysing ${mode}…` : `Generate ${mode === "deep" ? "Deep" : mode === "counter" ? "Counter" : "Quick"}`}</span>
+            <span>{getButtonLabel()}</span>
           </button>
         </div>
       </div>

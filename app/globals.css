@@ -2093,9 +2093,9 @@ body, textarea { caret-color: var(--sx-primary); }
   place-items: center;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: 6px;
   border: 1.5px solid var(--sx-border-strong);
-  background: transparent;
+  background: var(--sx-surface-3);
   color: transparent;
   transition: all var(--sx-dur) var(--sx-ease);
 }
@@ -2104,6 +2104,39 @@ body, textarea { caret-color: var(--sx-primary); }
   background: var(--sx-primary);
   border-color: var(--sx-primary);
   color: #ffffff;
+}
+
+.sx-tab-switch-btn {
+  margin-left: 8px;
+  padding: 3px 10px;
+  font-size: var(--sx-text-micro);
+  font-weight: 500;
+  border-radius: var(--sx-radius-chip);
+  border: 1px solid var(--sx-border-strong);
+  background: var(--sx-surface-2);
+  color: var(--sx-fg);
+  cursor: pointer;
+  transition: all var(--sx-dur-fast) var(--sx-ease);
+}
+
+.sx-tab-switch-btn:hover {
+  background: var(--sx-surface-3);
+  border-color: var(--sx-primary);
+}
+
+.sx-ready-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  background: var(--sx-surface-2);
+  border: 1px solid var(--sx-border-strong);
+  border-left: 3px solid var(--sx-primary);
+  border-radius: var(--sx-radius-card);
+  font-size: var(--sx-text-sm);
+  color: var(--sx-fg);
 }
 
 .sx-mode-card-title {
