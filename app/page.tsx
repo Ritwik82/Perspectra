@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "@/components/Icon";
 import { InputPanel } from "@/components/InputPanel";
 import { ReportCard } from "@/components/ReportCard";
@@ -37,6 +37,7 @@ export default function Page() {
   const [elapsed, setElapsed] = useState(0);
   const [highlightedQuote, setHighlightedQuote] = useState("");
   const [error, setError] = useState<AnalyzeError | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const currentFingerprint = useMemo(
     () => fingerprint([text.trim(), imageName ?? "", image ?? "", focus.trim(), outputLanguage.trim()]),
@@ -83,9 +84,20 @@ export default function Page() {
     return run;
   }
 
+  function stopAnalysis() {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setLoadingMode(null);
+    setBatchPosition(0);
+  }
+
   async function executeMode(run: AnalysisRun, requestedMode: AnalysisMode): Promise<boolean> {
     setLoadingMode(requestedMode);
     setError(null);
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
     setRuns((existing) => existing.map((item) => item.id === run.id
       ? { ...item, states: { ...item.states, [requestedMode]: "running" }, errors: { ...item.errors, [requestedMode]: undefined } }
       : item));
@@ -93,6 +105,7 @@ export default function Page() {
       const response = await fetch("/api/analyze", {
         method: "POST",
         headers: { "content-type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           text: run.text,
           imageBase64: run.imageData ?? undefined,
@@ -109,6 +122,12 @@ export default function Page() {
         : item));
       return true;
     } catch (caught) {
+      if ((caught as any)?.name === "AbortError" || (caught instanceof DOMException && caught.name === "AbortError")) {
+        setRuns((existing) => existing.map((item) => item.id === run.id
+          ? { ...item, states: { ...item.states, [requestedMode]: "idle" } }
+          : item));
+        return false;
+      }
       const failure = caught as AnalyzeError;
       const normalized = failure?.error ? failure : {
         error: "Could not reach the local analyser.",
@@ -188,6 +207,7 @@ export default function Page() {
         imageName={imageName}
         setImage={(value, name) => { setImage(value); setImageName(name ?? null); }}
         onSubmit={generateSelected}
+        onStop={stopAnalysis}
         onReset={startFresh}
         loading={!!loadingMode}
         hasResult={!!activeRun}
@@ -260,6 +280,10 @@ export default function Page() {
                 <span className="sx-loading-dot" />
                 <span className="sx-loading-text">{batchPosition ? `Generating ${loadingMode} · ${batchPosition} of 3` : `Generating ${loadingMode} analysis`}</span>
                 <span className="sx-loading-time">{elapsed}s</span>
+                <button type="button" className="sx-inline-stop-btn" onClick={stopAnalysis}>
+                  <Icon name="icon-close" size={12} />
+                  <span>Stop</span>
+                </button>
               </div>}
 
               {error && <section className="sx-error" role="alert"><p className="sx-error-title">{error.error}</p>{error.detail && <p className="sx-error-detail">{error.detail}</p>}<button className="sx-ghost-btn" onClick={generateSelected}>Retry {mode}</button></section>}

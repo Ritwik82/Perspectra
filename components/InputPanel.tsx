@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Icon } from "./Icon";
+import { LanguagePicker } from "./LanguagePicker";
 import type { AnalysisMode } from "@/lib/types";
 
 export interface InputPanelProps {
@@ -11,6 +12,7 @@ export interface InputPanelProps {
   imageName: string | null;
   setImage: (dataUrl: string | null, name?: string | null) => void;
   onSubmit: () => void;
+  onStop?: () => void;
   onReset: () => void;
   loading: boolean;
   hasResult: boolean;
@@ -32,6 +34,7 @@ export function InputPanel({
   imageName,
   setImage,
   onSubmit,
+  onStop,
   onReset,
   loading,
   hasResult,
@@ -182,14 +185,10 @@ export function InputPanel({
           maxLength={300}
           disabled={loading}
         />
-        <label htmlFor="output-language">Write the analysis in… <span>Optional · leave blank to match the post</span></label>
-        <input
-          id="output-language"
-          className="sx-focus-input"
+        <label>Write the analysis in… <span>Select from Gemma supported languages or leave blank to match post</span></label>
+        <LanguagePicker
           value={outputLanguage}
-          onChange={(event) => setOutputLanguage(event.target.value.slice(0, 60))}
-          placeholder="e.g. English, हिंदी, Français"
-          maxLength={60}
+          onChange={setOutputLanguage}
           disabled={loading}
         />
       </details>
@@ -197,10 +196,26 @@ export function InputPanel({
       <div className="sx-submit-row">
         <span className="sx-submit-note">Your post stays on this device.</span>
         <div className="sx-panel-actions">
-          {hasResult && <button type="button" className="sx-ghost-btn" onClick={onReset} disabled={loading}><Icon name="icon-plus" /><span>New</span></button>}
-          <button type="button" className="sx-btn" onClick={onSubmit} disabled={!ready}>
+          {hasResult && !loading && (
+            <button type="button" className="sx-ghost-btn" onClick={onReset} disabled={loading}>
+              <Icon name="icon-plus" />
+              <span>New</span>
+            </button>
+          )}
+          {loading && onStop && (
+            <button
+              type="button"
+              className="sx-btn sx-btn-stop"
+              onClick={onStop}
+              title="Stop the current analysis"
+            >
+              <Icon name="icon-close" size={14} />
+              <span>Stop Analysing</span>
+            </button>
+          )}
+          <button type="button" className="sx-btn" onClick={onSubmit} disabled={!ready || loading}>
             <Icon name="icon-search-plus" />
-          <span>{loading ? `Analysing ${mode}…` : `Generate ${mode === "deep" ? "Deep" : mode === "counter" ? "Counter" : "Quick"}`}</span>
+            <span>{loading ? `Analysing ${mode}…` : `Generate ${mode === "deep" ? "Deep" : mode === "counter" ? "Counter" : "Quick"}`}</span>
           </button>
         </div>
       </div>
