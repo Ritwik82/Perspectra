@@ -38,6 +38,20 @@ export function PersonaSelector({
               >
                 {persona.badge}
               </span>
+              <span
+                className={`sx-mode-check${isSelected ? " is-checked" : ""}`}
+                style={{
+                  backgroundColor: isSelected ? persona.accentColor : undefined,
+                  borderColor: isSelected ? persona.accentColor : undefined,
+                  color: "#ffffff",
+                }}
+              >
+                {isSelected ? (
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 8.5l3.5 3.5L13 5" />
+                  </svg>
+                ) : null}
+              </span>
             </div>
 
             <h3 className="sx-persona-name">{persona.name}</h3>

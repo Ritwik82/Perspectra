@@ -114,8 +114,13 @@ export function InputPanel({
           className="sx-textarea"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onInput={(e) => {
+            const el = e.currentTarget;
+            el.style.height = "auto";
+            el.style.height = `${Math.max(72, el.scrollHeight)}px`;
+          }}
           placeholder="Paste a post, comment, claim or argument…"
-          rows={7}
+          rows={3}
           spellCheck={false}
           aria-label="Post text"
           disabled={loading}
@@ -183,7 +188,7 @@ export function InputPanel({
             <div className="sx-mode-card-top">
               <span className="sx-mode-card-icon"><Icon name="icon-bolt" size={16} /></span>
               <span className={`sx-mode-check${selectedModes.includes("quick") ? " is-checked" : ""}`}>
-                {selectedModes.includes("quick") ? <Icon name="icon-check" size={11} /> : null}
+                {selectedModes.includes("quick") ? <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8.5l3.5 3.5L13 5" /></svg> : null}
               </span>
             </div>
             <strong className="sx-mode-card-title">Quick Summary</strong>
@@ -200,7 +205,7 @@ export function InputPanel({
             <div className="sx-mode-card-top">
               <span className="sx-mode-card-icon"><Icon name="icon-depth" size={16} /></span>
               <span className={`sx-mode-check${selectedModes.includes("deep") ? " is-checked" : ""}`}>
-                {selectedModes.includes("deep") ? <Icon name="icon-check" size={11} /> : null}
+                {selectedModes.includes("deep") ? <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8.5l3.5 3.5L13 5" /></svg> : null}
               </span>
             </div>
             <strong className="sx-mode-card-title">Deep Check</strong>
@@ -217,7 +222,7 @@ export function InputPanel({
             <div className="sx-mode-card-top">
               <span className="sx-mode-card-icon"><Icon name="icon-branch" size={16} /></span>
               <span className={`sx-mode-check${selectedModes.includes("counter") ? " is-checked" : ""}`}>
-                {selectedModes.includes("counter") ? <Icon name="icon-check" size={11} /> : null}
+                {selectedModes.includes("counter") ? <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8.5l3.5 3.5L13 5" /></svg> : null}
               </span>
             </div>
             <strong className="sx-mode-card-title">Other Side</strong>

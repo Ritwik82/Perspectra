@@ -259,7 +259,7 @@ export default function Page() {
 
       <div style={{ display: activeView === "analyzer" ? "block" : "none" }}>
         <section className="sx-intro" id="top">
-          <h1 className="sx-h1">Before you believe or share it,<br /><span className="sx-h1-gradient">see the full story.</span></h1>
+          <h1 className="sx-h1">Before you believe or share it,<br /><span className="sx-h1-accent">see the full story.</span></h1>
           <p className="sx-lede">Check the main claims, see what proof is provided, and find out what the other side says.</p>
         </section>
 
@@ -468,20 +468,6 @@ export default function Page() {
           </div>
         </section>
       )}
-
-      {!loadingMode && (
-            <section className="sx-perspectives" aria-labelledby="sx-perspectives-title">
-              <div>
-                <p className="sx-perspectives-kicker">Interactive Arena</p>
-                <h2 id="sx-perspectives-title">Debate with distinct archetypes.</h2>
-                <p>Talk to The Conspiracy Theorist, Entrepreneur, Cynical Redditor, or Gym Bro, then get an impartial referee analysis.</p>
-              </div>
-              <button type="button" className="sx-btn sx-btn-arena" onClick={() => setActiveView("debate")}>
-                <span>Enter Debate Arena</span>
-                <Icon name="icon-arrow-right" size={14} />
-              </button>
-            </section>
-          )}
       </div>
 
       <footer className="sx-foot"><p>Local inference through Ollama. Perspectra can examine reasoning; it does not independently verify current facts or know an author’s intent.</p></footer>

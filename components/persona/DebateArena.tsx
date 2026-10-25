@@ -217,7 +217,7 @@ export function DebateArena() {
               <input
                 id="debate-topic-input"
                 className="sx-focus-input sx-topic-input"
-                placeholder="e.g. Do tech companies manipulate algorithms on purpose?"
+                placeholder="e.g. Do algorithms divide people on purpose?"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && startDebate()}
